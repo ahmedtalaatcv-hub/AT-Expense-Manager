@@ -475,5 +475,6 @@ function clearMonth() {
       }, { merge: true });
 }
 function toggleMenu() {
-    document.getElementById("menu").classList.toggle("hidden");
+    const menu = document.getElementById("menu");
+    menu.classList.toggle("hidden");
 }

@@ -1,278 +1,100 @@
-body {
-    font-family: Cairo, sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    padding: 20px;
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>مصروفاتي الشهرية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<div id="aboutModal" class="modal hidden">
+    <div class="modal-content">
+	<img src="logo.png" class="about-logo" alt="App Logo">
+        <h2>حول التطبيق</h2>
 
-.app {
-    max-width: 430px;
-    margin: auto;
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-}
+        <p><strong>اسم المطور:</strong> Ahmed Talaat</p>
+        <p><strong>البريد الإلكتروني:</strong> ahmedtalaat.bio@gmail.com</p>
+        <p><strong>الهاتف:</strong> 01050858508</p>
 
-h1 {
-    text-align: center;
-}
+        <hr>
 
-.card {
-    margin-bottom: 15px;
-}
+        <p>
+            هذا التطبيق مخصص لإدارة المصروفات الشهرية،  
+            يتيح لك تسجيل الميزانية، متابعة المصروفات،  
+            التنبيه عند قرب نفاد الرصيد،  
+            وتصدير التقارير بصيغة PDF.
+        </p>
 
-input, button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-}
-
-button {
-    background: #667eea;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.summary {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-}
-
-.controls {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.danger { background: #e74c3c; }
-.warning { background: #f39c12; }
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-.delete {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    cursor: pointer;
-    color: red;
-}
-.budget-warning {
-    background: #fff3cd;
-    color: #856404;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid #ffeeba;
-}
-.hidden {
-    display: none;
-}
-.hidden {
-    display: none !important;
-}
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-}
-
-.modal-content h2 {
-    margin-bottom: 15px;
-}
-
-.modal-content button {
-    margin-top: 15px;
-    background: #667eea;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-/* لوجو التطبيق */
-.logo {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.logo img {
-    width: 90px;
-    height: auto;
-}
-
-/* لوجو نافذة حول التطبيق */
-.about-logo {
-    width: 80px;
-    margin-bottom: 10px;
-}
-/* ===== تحسين الموبايل ===== */
-@media (max-width: 600px) {
-
-    body {
-        padding: 10px;
-    }
-
-    .app {
-        width: 100%;
-        padding: 15px;
-        border-radius: 15px;
-    }
-
-    .controls {
-        flex-direction: column;
-    }
-
-    .controls button {
-        width: 100%;
-        font-size: 15px;
-    }
-
-    input, button {
-        font-size: 15px;
-    }
-
-    h1 {
-        font-size: 18px;
-    }
-
-    .summary {
-        flex-direction: column;
-        gap: 5px;
-        text-align: center;
-    }
-
-    .logo img {
-        width: 70px;
-    }
-}
-.menu-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    font-size: 22px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    background: #333;
-    color: #fff;
-    z-index: 1001;
-}
-
-/* القائمة */
-.menu {
-    position: fixed;
-    top: 60px;
-    right: 15px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    z-index: 999;
-    animation: fadeSlide 0.3s ease;
-}
-
-.hidden {
-    display: none;
-}
-
-.menu-btn {
-    position: fixed;
-    top: 12px;
-    right: 15px;
-    font-size: 26px;
-    background: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* أنيميشن ناعم */
-@keyframes fadeSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-.menu-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #2f2f2f;
-  color: #fff;
-  font-size: 26px;
-  border: none;
-  cursor: pointer;
-  z-index: 2000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: all 0.25s ease;
-}
-
-.menu-btn:hover {
-  background: #000;
-  transform: scale(1.08);
-}
-.menu {
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.menu.hidden {
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-}
-
-.menu:not(.hidden) {
-  opacity: 1;
-  transform: translateY(0);
-}
+        <button onclick="closeAbout()">إغلاق</button>
+    </div>
+</div>
+<body>
 
 
-.primary { background: #007bff; color: #fff; }
-.warning { background: #ffc107; color: #000; }
-.danger  { background: #dc3545; color: #fff; }
-.info    { background: #17a2b8; color: #fff; }
-.logout  { background: #343a40; color: #fff; }
+<div class="logo">
+    <img src="logo.png" alt="App Logo">
+</div>
+    <h1>📊 مصروفاتي الشهرية</h1>
+
+    <div class="card">
+        <label>اختر الشهر</label>
+        <input type="month" id="month" onchange="loadMonth(this.value)">
+    </div>
+
+    <div class="card">
+        <label>الميزانية الشهرية</label>
+        <input type="number" id="budget">
+        <button onclick="setBudget()">حفظ الميزانية</button>
+    </div>
+<div id="budgetWarning" class="budget-warning hidden">
+    ⚠️ احذر، رصيدك لهذا الشهر أوشك على النفاذ
+</div>
+    <div class="summary">
+        <p>💸 المصروف: <span id="spent">0</span></p>
+        <p>🟢 المتبقي: <span id="remaining">0</span></p>
+    </div>
+
+    <div class="card">
+        <label>إضافة مصروف</label>
+        <input type="text" id="title" placeholder="سبب الصرف">
+        <input type="number" id="amount" placeholder="المبلغ">
+        <button onclick="addExpense()">إضافة</button>
+    </div>
+<!-- القائمة المنبثقة -->
+<div id="menu" class="menu hidden">
+  <div class="controls">
+    <button class="danger" onclick="clearMonth()">🗑 حذف مصروفات الشهر</button>
+    <button class="warning" onclick="resetBudget()">🔄 تصفير الميزانية</button>
+    <button onclick="exportMonth()">📄 تصدير PDF</button>
+    <button onclick="openAbout()">ℹ️ حول التطبيق</button>
+    <button onclick="logout()">🚪 تسجيل خروج</button>
+  </div>
+</div>
+
+
+
+    <ul id="expenseList"></ul>
+</div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCp93T3mbY45mMYPbnfnuIPDyy7S7sLe3s",
+    authDomain: "at-expense-manager.firebaseapp.com",
+    projectId: "at-expense-manager",
+    storageBucket: "at-expense-manager.firebasestorage.app",
+    messagingSenderId: "871591120038",
+    appId: "1:871591120038:web:f652793e52f7167fc7f867"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+
+<!-- jsPDF -->
+<script src="script.js"></script>
+</body>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+</html>

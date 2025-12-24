@@ -1,0 +1,251 @@
+body {
+    font-family: Cairo, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 20px;
+}
+
+.app {
+    max-width: 430px;
+    margin: auto;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.danger { background: #e74c3c; }
+.warning { background: #f39c12; }
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.delete {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
+    color: red;
+}
+.budget-warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ffeeba;
+}
+.hidden {
+    display: none;
+}
+.hidden {
+    display: none !important;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    margin-top: 15px;
+    background: #667eea;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+/* لوجو التطبيق */
+.logo {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    width: 90px;
+    height: auto;
+}
+
+/* لوجو نافذة حول التطبيق */
+.about-logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+/* ===== تحسين الموبايل ===== */
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .app {
+        width: 100%;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .controls button {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    input, button {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    .summary {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 70px;
+    }
+}
+.menu-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    font-size: 22px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #333;
+    color: #fff;
+    z-index: 1001;
+}
+
+/* القائمة */
+.menu {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    padding: 10px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+}
+
+/* إخفاء */
+.menu {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    padding: 10px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+
+    /* أنيميشن */
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+
+/* ألوان الأزرار (زي ما كانت) */
+.menu button {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.primary { background: #007bff; color: #fff; }
+.warning { background: #ffc107; color: #000; }
+.danger  { background: #dc3545; color: #fff; }
+.info    { background: #17a2b8; color: #fff; }
+.logout  { background: #343a40; color: #fff; }

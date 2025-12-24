@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>مصروفاتي الشهرية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<div id="aboutModal" class="modal hidden">
+    <div class="modal-content">
+	<img src="logo.png" class="about-logo" alt="App Logo">
+        <h2>حول التطبيق</h2>
+
+        <p><strong>اسم المطور:</strong> Ahmed Talaat</p>
+        <p><strong>البريد الإلكتروني:</strong> ahmedtalaat.bio@gmail.com</p>
+        <p><strong>الهاتف:</strong> 01050858508</p>
+
+        <hr>
+
+        <p>
+            هذا التطبيق مخصص لإدارة المصروفات الشهرية،  
+            يتيح لك تسجيل الميزانية، متابعة المصروفات،  
+            التنبيه عند قرب نفاد الرصيد،  
+            وتصدير التقارير بصيغة PDF.
+        </p>
+
+        <button onclick="closeAbout()">إغلاق</button>
+    </div>
+</div>
+<body>
+
+
+<div class="logo">
+    <img src="logo.png" alt="App Logo">
+</div>
+    <h1>📊 مصروفاتي الشهرية</h1>
+
+    <div class="card">
+        <label>اختر الشهر</label>
+        <input type="month" id="month" onchange="loadMonth(this.value)">
+    </div>
+
+    <div class="card">
+        <label>الميزانية الشهرية</label>
+        <input type="number" id="budget">
+        <button onclick="setBudget()">حفظ الميزانية</button>
+    </div>
+<div id="budgetWarning" class="budget-warning hidden">
+    ⚠️ احذر، رصيدك لهذا الشهر أوشك على النفاذ
+</div>
+    <div class="summary">
+        <p>💸 المصروف: <span id="spent">0</span></p>
+        <p>🟢 المتبقي: <span id="remaining">0</span></p>
+    </div>
+
+    <div class="card">
+        <label>إضافة مصروف</label>
+        <input type="text" id="title" placeholder="سبب الصرف">
+        <input type="number" id="amount" placeholder="المبلغ">
+        <button onclick="addExpense()">إضافة</button>
+    </div>
+<!-- زر القائمة -->
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<!-- القائمة المنثقة -->
+<div id="menu" class="menu hidden
+    <div class="controls">        <button class="danger" onclick="clearMonth()">🗑 حذف مصروفات الشهر</button>
+        <button class="warning" onclick="resetBudget()">🔄 تصفير الميزانية</button>
+        <button onclick="exportMonth()">📄 تصدير PDF</button>
+		<button onclick="openAbout()">ℹ️ حول التطبيق</button>
+		<button onclick="logout()">🚪 تسجيل خروج</button>
+    </div>
+
+    <ul id="expenseList"></ul>
+</div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCp93T3mbY45mMYPbnfnuIPDyy7S7sLe3s",
+    authDomain: "at-expense-manager.firebaseapp.com",
+    projectId: "at-expense-manager",
+    storageBucket: "at-expense-manager.firebasestorage.app",
+    messagingSenderId: "871591120038",
+    appId: "1:871591120038:web:f652793e52f7167fc7f867"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+
+<!-- jsPDF -->
+<script src="script.js"></script>
+</body>
+</html>

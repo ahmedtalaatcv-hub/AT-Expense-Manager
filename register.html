@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء حساب جديد</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="login-container">
+  <div class="login-card">
+
+    <img src="logo.png" class="logo" alt="AT Expense Manager">
+
+    <h2>إنشاء حساب جديد</h2>
+    <p class="subtitle">أنشئ حسابك وابدأ إدارة مصروفاتك</p>
+
+    <input type="email" id="email" placeholder="البريد الإلكتروني">
+    <input type="password" id="password" placeholder="كلمة المرور">
+
+    <button class="btn success" onclick="register()">إنشاء الحساب</button>
+
+    <p style="margin-top:15px;">
+      <a href="login.html" style="text-decoration:none;color:#667eea;">
+        ⬅ الرجوع لتسجيل الدخول
+      </a>
+    </p>
+
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCp93T3mbY45mMYPbnfnuIPDyy7S7sLe3s",
+    authDomain: "at-expense-manager.firebaseapp.com",
+    projectId: "at-expense-manager",
+    storageBucket: "at-expense-manager.firebasestorage.app",
+    messagingSenderId: "871591120038",
+    appId: "1:871591120038:web:f652793e52f7167fc7f867"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script src="login.js"></script>
+</body>
+</html>

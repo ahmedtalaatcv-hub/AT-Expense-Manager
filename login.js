@@ -1,15 +1,21 @@
+// Firebase Auth & Firestore
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const auth = firebase.auth();
-const db = firebase.firestore();
-
+/* =========================
+   إنشاء حساب جديد
+========================= */
 function register() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   if (!email || !password) {
-    alert("من فضلك أدخل الإيميل وكلمة السر");
+    alert("❌ من فضلك أدخل البريد الإلكتروني وكلمة المرور");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("❌ كلمة المرور يجب ألا تقل عن 6 أحرف");
     return;
   }
 
@@ -17,49 +23,75 @@ function register() {
     .then(userCredential => {
       const user = userCredential.user;
 
-      // إنشاء مستند المستخدم
-      db.collection("users").doc(user.uid).set({
+      // إنشاء ملف المستخدم في Firestore
+      return db.collection("users").doc(user.uid).set({
         email: email,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-
+    })
+    .then(() => {
+      alert("✅ تم إنشاء الحساب بنجاح");
       window.location.href = "index.html";
     })
     .catch(error => {
-      alert(error.message);
+      handleAuthError(error);
     });
 }
 
+/* =========================
+   تسجيل الدخول
+========================= */
 function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!email || !password) {
+    alert("❌ من فضلك أدخل البريد الإلكتروني وكلمة المرور");
+    return;
+  }
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
       window.location.href = "index.html";
     })
     .catch(error => {
-      alert("❌ خطأ في تسجيل الدخول");
+      handleAuthError(error);
     });
 }
 
-
-function loginWithGoogle() {
-  auth.signInWithPopup(provider)
-    .then(result => {
-      const user = result.user;
-
-      // حفظ بيانات المستخدم
-      db.collection("users").doc(user.uid).set({
-        name: user.displayName,
-        email: user.email,
-        photo: user.photoURL
-      }, { merge: true });
-
-      window.location.href = "index.html";
-    })
-    .catch(err => {
-      console.error(err);
-      alert("❌ فشل تسجيل الدخول");
+/* =========================
+   تسجيل الخروج
+========================= */
+function logout() {
+  auth.signOut()
+    .then(() => {
+      window.location.href = "login.html";
     });
+}
+
+/* =========================
+   معالجة الأخطاء
+========================= */
+function handleAuthError(error) {
+  let message = "❌ حدث خطأ، حاول مرة أخرى";
+
+  switch (error.code) {
+    case "auth/email-already-in-use":
+      message = "❌ هذا البريد مستخدم بالفعل";
+      break;
+    case "auth/invalid-email":
+      message = "❌ البريد الإلكتروني غير صالح";
+      break;
+    case "auth/user-not-found":
+      message = "❌ لا يوجد حساب بهذا البريد";
+      break;
+    case "auth/wrong-password":
+      message = "❌ كلمة المرور غير صحيحة";
+      break;
+    case "auth/weak-password":
+      message = "❌ كلمة المرور ضعيفة جدًا";
+      break;
+  }
+
+  alert(message);
 }

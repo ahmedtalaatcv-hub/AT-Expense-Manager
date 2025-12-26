@@ -155,18 +155,20 @@ h1 {
   <h1>مرحبًا بك 👋</h1>
   <p class="subtitle">سجّل دخولك لإدارة مصروفاتك بسهولة</p>
 
-  <div class="field">
-    <label>البريد الإلكتروني</label>
-    <input type="email" id="email" placeholder="example@email.com">
-  </div>
+<button class="btn btn-primary" onclick="login()">تسجيل الدخول</button>
 
-  <div class="field">
-    <label>كلمة المرور</label>
-    <input type="password" id="password" placeholder="••••••••">
-  </div>
+<div class="divider">أو</div>
 
-  <button class="btn btn-primary" onclick="login()">تسجيل الدخول</button>
-  <button class="btn btn-secondary" onclick="register()">إنشاء حساب جديد</button>
+<button class="btn btn-secondary" onclick="goToRegister()">
+  إنشاء حساب جديد
+</button>
+
+<p style="text-align:center; margin-top:15px;">
+  <a href="#" onclick="resetPassword()" style="color:#667eea; text-decoration:none;">
+    هل نسيت كلمة السر؟
+  </a>
+</p>
+
 
   <div class="footer">
     AT Expense Manager © 2025
@@ -195,3 +197,4 @@ h1 {
 <script src="login.js"></script>
 </body>
 </html>
+

@@ -95,3 +95,25 @@ function handleAuthError(error) {
 
   alert(message);
 }
+function goToRegister() {
+  window.location.href = "register.html";
+}
+
+function resetPassword() {
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    alert("❌ من فضلك أدخل البريد الإلكتروني أولًا");
+    return;
+  }
+
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      alert("📧 تم إرسال رابط إعادة تعيين كلمة المرور");
+    })
+    .catch(error => {
+      handleAuthError(error);
+    });
+}
+
+

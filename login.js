@@ -44,7 +44,6 @@ function register() {
     .then(userCredential => {
       const user = userCredential.user;
 
-      // إنشاء مستخدم في Firestore
       return db.collection("users").doc(user.uid).set({
         email: email,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -60,7 +59,7 @@ function register() {
 }
 
 /* ======================
-   هل نسيت كلمة السر (آمن)
+   هل نسيت كلمة السر (مخصص)
 ====================== */
 function resetPassword() {
   const email = getEmail();
@@ -70,11 +69,21 @@ function resetPassword() {
     return;
   }
 
-  auth.sendPasswordResetEmail(email)
-    .then(() => {
-      alert(
-        "📧 إذا كان البريد مسجّل لدينا، سيتم إرسال رابط إعادة تعيين كلمة المرور"
-      );
+  // 🔍 نتحقق هل الإيميل مسجّل
+  auth.fetchSignInMethodsForEmail(email)
+    .then(methods => {
+
+      // ❌ غير مسجّل
+      if (methods.length === 0) {
+        alert("❌ هذا البريد غير مسجّل، يرجى إنشاء حساب جديد");
+        return;
+      }
+
+      // ✅ مسجّل → نرسل الإيميل
+      return auth.sendPasswordResetEmail(email)
+        .then(() => {
+          alert("📧 تم إرسال رابط تغيير كلمة المرور إلى حسابك");
+        });
     })
     .catch(error => {
       handleError(error);
@@ -118,6 +127,9 @@ function handleError(error) {
   let msg = "❌ حدث خطأ غير متوقع";
 
   switch (error.code) {
+    case "auth/invalid-email":
+      msg = "❌ بريد إلكتروني غير صالح";
+      break;
     case "auth/user-not-found":
       msg = "❌ لا يوجد حساب بهذا البريد";
       break;
@@ -126,9 +138,6 @@ function handleError(error) {
       break;
     case "auth/email-already-in-use":
       msg = "❌ البريد مستخدم بالفعل";
-      break;
-    case "auth/invalid-email":
-      msg = "❌ بريد إلكتروني غير صالح";
       break;
     case "auth/weak-password":
       msg = "❌ كلمة المرور ضعيفة";

@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول</title>
 
-<title>AT Expense Manager | تسجيل الدخول</title>
-
-<!-- خط أندرويد -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: "Cairo", sans-serif;
+  font-family: Cairo, sans-serif;
 }
 
 body {
@@ -24,32 +22,17 @@ body {
   justify-content: center;
 }
 
-/* الكارت */
-.auth-card {
+.card {
   background: #fff;
   width: 100%;
   max-width: 380px;
-  border-radius: 28px;
-  padding: 30px 24px;
+  padding: 28px;
+  border-radius: 26px;
   box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-  animation: slideUp 0.6s ease;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* اللوجو */
 .logo {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   margin-bottom: 10px;
 }
 
@@ -57,10 +40,8 @@ body {
   width: 90px;
 }
 
-/* العنوان */
-h1 {
+h2 {
   text-align: center;
-  font-size: 22px;
   margin: 10px 0 5px;
 }
 
@@ -71,108 +52,73 @@ h1 {
   margin-bottom: 25px;
 }
 
-/* الحقول */
-.field {
-  margin-bottom: 15px;
-}
-
-.field label {
-  font-size: 13px;
-  color: #555;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.field input {
+input {
   width: 100%;
   padding: 14px;
   border-radius: 14px;
   border: 1px solid #ddd;
+  margin-bottom: 12px;
   font-size: 15px;
 }
 
-.field input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-/* الأزرار */
-.btn {
+button {
   width: 100%;
   padding: 14px;
   border-radius: 16px;
   border: none;
   font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-.btn-primary {
+.login {
   background: #667eea;
   color: #fff;
-  margin-bottom: 10px;
 }
 
-.btn-primary:hover {
-  background: #5a6fe0;
-}
-
-.btn-secondary {
+.register {
   background: #2ecc71;
   color: #fff;
+  margin-top: 10px;
 }
 
-.btn-secondary:hover {
-  background: #27ae60;
-}
-
-/* فاصل */
-.divider {
+.link {
   text-align: center;
-  margin: 20px 0;
-  color: #aaa;
-  font-size: 13px;
+  margin-top: 14px;
 }
 
-/* فوتر */
-.footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 12px;
-  color: #888;
+.link a {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="auth-card">
+<div class="card">
 
   <div class="logo">
-    <img src="logo.png" alt="AT Expense Manager">
+    <img src="logo.png">
   </div>
 
-  <h1>مرحبًا بك 👋</h1>
-  <p class="subtitle">سجّل دخولك لإدارة مصروفاتك بسهولة</p>
+  <h2>تسجيل الدخول</h2>
+  <p class="subtitle">ادخل بياناتك للمتابعة</p>
 
-<button class="btn btn-primary" onclick="login()">تسجيل الدخول</button>
+  <!-- ✅ خانات تسجيل الدخول -->
+  <input type="email" id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="password" placeholder="كلمة المرور">
 
-<div class="divider">أو</div>
+  <!-- ✅ زر تسجيل الدخول -->
+  <button class="login" onclick="login()">تسجيل الدخول</button>
 
-<button class="btn btn-secondary" onclick="goToRegister()">
-  إنشاء حساب جديد
-</button>
-
-<p style="text-align:center; margin-top:15px;">
-  <a href="#" onclick="resetPassword()" style="color:#667eea; text-decoration:none;">
-    هل نسيت كلمة السر؟
-  </a>
-</p>
-
-
-  <div class="footer">
-    AT Expense Manager © 2025
+  <!-- ✅ هل نسيت كلمة السر -->
+  <div class="link">
+    <a href="#" onclick="resetPassword()">هل نسيت كلمة السر؟</a>
   </div>
+
+  <!-- ✅ إنشاء حساب -->
+  <button class="register" onclick="goToRegister()">إنشاء حساب جديد</button>
 
 </div>
 
@@ -182,19 +128,16 @@ h1 {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyCp93T3mbY45mMYPbnfnuIPDyy7S7sLe3s",
-    authDomain: "at-expense-manager.firebaseapp.com",
-    projectId: "at-expense-manager",
-    storageBucket: "at-expense-manager.firebasestorage.app",
-    messagingSenderId: "871591120038",
-    appId: "1:871591120038:web:f652793e52f7167fc7f867"
-  };
-
-  firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+  apiKey: "AIzaSyCp93T3mbY45mMYPbnfnuIPDyy7S7sLe3s",
+  authDomain: "at-expense-manager.firebaseapp.com",
+  projectId: "at-expense-manager",
+  storageBucket: "at-expense-manager.firebasestorage.app",
+  messagingSenderId: "871591120038",
+  appId: "1:871591120038:web:f652793e52f7167fc7f867"
+});
 </script>
 
 <script src="login.js"></script>
 </body>
 </html>
-

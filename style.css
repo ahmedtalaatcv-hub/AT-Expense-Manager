@@ -272,6 +272,20 @@ li {
 .hidden {
   display: none;
 }
+.filter-btn {
+  width: auto;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #444;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.filter-btn:active {
+  transform: scale(0.95);
+}
 
 
 .primary { background: #007bff; color: #fff; }
@@ -279,4 +293,5 @@ li {
 .danger  { background: #dc3545; color: #fff; }
 .info    { background: #17a2b8; color: #fff; }
 .logout  { background: #343a40; color: #fff; }
+
 

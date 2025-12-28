@@ -575,5 +575,34 @@ function saveBudgetFromModal() {
   closeBudgetModal();
 }
 
+function openBudgetModal() {
+  document.getElementById("budgetModal").classList.remove("hidden");
+}
+
+function closeBudgetModal() {
+  document.getElementById("budgetModal").classList.add("hidden");
+}
+
+function saveBudgetFromModal() {
+  const month = document.getElementById("modalMonth").value;
+  const budget = document.getElementById("modalBudget").value;
+
+  if (!month || !budget) return;
+
+  currentMonth = month;
+  document.getElementById("month").value = month;
+  document.getElementById("budget").value = budget;
+
+  setBudget();
+  closeBudgetModal();
+}
+function openFilterModal() {
+  document.getElementById("filterModal").classList.remove("hidden");
+}
+
+function closeFilterModal() {
+  document.getElementById("filterModal").classList.add("hidden");
+}
+
 
 

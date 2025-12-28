@@ -198,6 +198,7 @@ renderExpenses(expenses);
         }
 
       }, err => console.error(err));
+	updateBudgetMonthText();
 }
 
 
@@ -659,6 +660,7 @@ function openFilterModal() {
 function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
+
 
 
 

@@ -563,15 +563,31 @@ function closeBudgetModal() {
 
 function saveBudgetFromModal() {
   const month = document.getElementById("modalMonth").value;
-  const budget = document.getElementById("modalBudget").value;
+  const budgetValue = document.getElementById("modalBudget").value;
 
-  if (!month || !budget) return;
+  if (!month) {
+    alert("من فضلك اختر الشهر");
+    return;
+  }
 
+  if (!budgetValue || budgetValue <= 0) {
+    alert("من فضلك أدخل قيمة ميزانية صحيحة");
+    return;
+  }
+
+  // ربط القيم بالمدخلات الأساسية
   currentMonth = month;
-  document.getElementById("month").value = month;
-  document.getElementById("budget").value = budget;
 
+  const monthInput = document.getElementById("month");
+  const budgetInput = document.getElementById("budget");
+
+  if (monthInput) monthInput.value = month;
+  if (budgetInput) budgetInput.value = budgetValue;
+
+  // حفظ الميزانية
   setBudget();
+
+  // إغلاق النافذة
   closeBudgetModal();
 }
 
@@ -603,6 +619,7 @@ function openFilterModal() {
 function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
+
 
 
 

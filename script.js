@@ -153,6 +153,20 @@ unsubscribe = db.collection("users")
 
         const m = doc.data();
         const budget = Number(m.budget || 0);
+	  // عرض الشهر والسنة بجانب الميزانية
+if (currentMonth) {
+  const [year, month] = currentMonth.split("-");
+
+  const monthNames = [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+  ];
+
+  const monthText = `${monthNames[Number(month) - 1]} ${year}`;
+  document.getElementById("budgetMonthText").innerText = monthText;
+} else {
+  document.getElementById("budgetMonthText").innerText = "—";
+}
 	  document.getElementById("totalBudget").innerText = budget;
         const expenses = m.expenses || [];
         allExpenses = expenses;
@@ -630,6 +644,7 @@ function openFilterModal() {
 function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
+
 
 
 

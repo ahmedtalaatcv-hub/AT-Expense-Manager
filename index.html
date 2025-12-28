@@ -27,6 +27,18 @@
         <button onclick="closeAbout()">إغلاق</button>
     </div>
 </div>
+	<div id="budgetModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>💰 الميزانية</h2>
+
+    <input type="month" id="modalMonth">
+    <input type="number" id="modalBudget" placeholder="قيمة الميزانية">
+
+    <button onclick="saveBudgetFromModal()">حفظ</button>
+    <button onclick="closeBudgetModal()">إغلاق</button>
+  </div>
+</div>
+
 <body>
 
 
@@ -164,6 +176,7 @@
 </body>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </html>
+
 
 
 

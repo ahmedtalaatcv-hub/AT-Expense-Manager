@@ -269,6 +269,9 @@ li {
   opacity: 1;
   transform: translateY(0);
 }
+.hidden {
+  display: none;
+}
 
 
 .primary { background: #007bff; color: #fff; }
@@ -276,3 +279,4 @@ li {
 .danger  { background: #dc3545; color: #fff; }
 .info    { background: #17a2b8; color: #fff; }
 .logout  { background: #343a40; color: #fff; }
+

@@ -24,22 +24,32 @@ let allExpenses = [];
 // ===== تحميل الشهر =====
 // ===== الميزانية =====
 function setBudget() {
-    if (!currentMonth) return;
+  if (!currentMonth) return;
 
-    const user = firebase.auth().currentUser;
-    if (!user) return;
+  const user = firebase.auth().currentUser;
+  if (!user) return;
 
-    const budget = Number(document.getElementById("budget").value);
-    if (!budget) return;
+  const budget = Number(document.getElementById("budget").value);
+  if (!budget || budget <= 0) {
+    alert("من فضلك أدخل قيمة ميزانية صحيحة");
+    return;
+  }
 
-    db.collection("users")
-      .doc(user.uid)
-      .collection("months")
-      .doc(currentMonth)
-      .set({
-          budget: budget
-      }, { merge: true }); // ⭐⭐⭐ مهم
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(currentMonth)
+    .set(
+      { budget: budget },
+      { merge: true }
+    )
+    .then(() => {
+      // ✅ تحديث الواجهة فورًا
+      document.getElementById("totalBudget").innerText = budget;
+      updateUI();
+    });
 }
+
 
 // ===== إضافة مصروف =====
 function addExpense() {
@@ -143,6 +153,7 @@ unsubscribe = db.collection("users")
 
         const m = doc.data();
         const budget = Number(m.budget || 0);
+	  document.getElementById("totalBudget").innerText = budget;
         const expenses = m.expenses || [];
         allExpenses = expenses;
 renderExpenses(expenses);
@@ -619,6 +630,7 @@ function openFilterModal() {
 function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
+
 
 
 

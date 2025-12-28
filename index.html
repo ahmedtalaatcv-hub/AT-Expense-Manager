@@ -38,6 +38,26 @@
     <button onclick="closeBudgetModal()">إغلاق</button>
   </div>
 </div>
+<div id="filterModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>🔍 فلترة المصروفات</h2>
+
+    <input type="date" id="fromDate">
+    <input type="date" id="toDate">
+
+    <select id="filterCategory">
+      <option value="">كل الفئات</option>
+      <option value="مواصلات">🚕 مواصلات</option>
+      <option value="طعام">🍔 طعام</option>
+      <option value="ملابس">👕 ملابس</option>
+      <option value="فواتير">💡 فواتير</option>
+    </select>
+
+    <button onclick="applyFilters()">تطبيق</button>
+    <button onclick="resetFilters()">إلغاء</button>
+    <button onclick="closeFilterModal()">إغلاق</button>
+  </div>
+</div>
 
 <body>
 
@@ -176,6 +196,7 @@
 </body>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </html>
+
 
 
 

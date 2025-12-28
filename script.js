@@ -545,5 +545,10 @@ function resetFilters() {
   renderExpenses(allExpenses);
 }
 
+function toggleFilters() {
+  const box = document.getElementById("filtersBox");
+  box.classList.toggle("hidden");
+}
+
 
 

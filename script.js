@@ -18,6 +18,7 @@ let currentMonth = localStorage.getItem("lastMonth") || "";
 
 
 let unsubscribe = null;
+let allExpenses = [];
 
 
 // ===== تحميل الشهر =====
@@ -139,7 +140,8 @@ unsubscribe = db.collection("users")
         const m = doc.data();
         const budget = Number(m.budget || 0);
         const expenses = m.expenses || [];
-
+        allExpenses = expenses;
+renderExpenses(expenses);
         const spent = expenses.reduce((s, e) => s + Number(e.amount), 0);
         const remaining = budget - spent;
 
@@ -166,19 +168,6 @@ unsubscribe = db.collection("users")
             }
         }
 
-        const list = document.getElementById("expenseList");
-        list.innerHTML = "";
-
-        expenses.forEach((e, i) => {
-            list.innerHTML += `
-            <li>
-  <span class="delete" onclick="deleteExpense(${i})">✖</span>
-  <strong>${e.title}</strong><br>
-  📂 ${e.category}<br>
-  💸 ${e.amount} جنيه<br>
-  ⏰ ${e.time} | 📅 ${e.date}
-</li>`;
-        });
       }, err => console.error(err));
 }
 
@@ -505,5 +494,56 @@ function deleteExpense(index) {
     }, { merge: true });
   });
 }
+function renderExpenses(expenses) {
+  const list = document.getElementById("expenseList");
+  list.innerHTML = "";
+
+  expenses.forEach((e, i) => {
+    list.innerHTML += `
+      <li>
+        <span class="delete" onclick="deleteExpense(${i})">✖</span>
+        <strong>${e.title}</strong><br>
+        📂 ${e.category}<br>
+        💸 ${e.amount} جنيه<br>
+        ⏰ ${e.time} | 📅 ${e.date}
+      </li>
+    `;
+  });
+}
+function applyFilters() {
+  let filtered = [...allExpenses];
+
+  const fromDate = document.getElementById("fromDate").value;
+  const toDate = document.getElementById("toDate").value;
+  const category = document.getElementById("filterCategory").value;
+
+  // فلترة بالتاريخ
+  if (fromDate) {
+    filtered = filtered.filter(e =>
+      new Date(e.date) >= new Date(fromDate)
+    );
+  }
+
+  if (toDate) {
+    filtered = filtered.filter(e =>
+      new Date(e.date) <= new Date(toDate)
+    );
+  }
+
+  // فلترة بالفئة
+  if (category) {
+    filtered = filtered.filter(e => e.category === category);
+  }
+
+  renderExpenses(filtered);
+}
+function resetFilters() {
+  document.getElementById("fromDate").value = "";
+  document.getElementById("toDate").value = "";
+  document.getElementById("filterCategory").value = "";
+
+  renderExpenses(allExpenses);
+}
+
 
 

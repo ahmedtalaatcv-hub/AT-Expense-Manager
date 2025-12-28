@@ -661,6 +661,22 @@ function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
 
+function openQuickMonthPicker() {
+  document.getElementById("quickMonthPicker").click();
+}
+
+function changeMonthQuick(value) {
+  if (!value) return;
+
+  currentMonth = value;
+
+  // تحديث النص
+  updateBudgetMonthText();
+
+  // تحميل بيانات الشهر
+  loadMonth(value);
+}
+
 
 
 

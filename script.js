@@ -677,6 +677,22 @@ function changeMonthQuick(value) {
   loadMonth(value);
 }
 
+// فتح اختيار الشهر فقط
+function openMonthPicker() {
+  document.getElementById("quickMonthPicker").click();
+}
+
+// تغيير الشهر بدون فتح نافذة الميزانية
+function changeMonthOnly(monthValue) {
+  if (!monthValue) return;
+
+  currentMonth = monthValue;
+  localStorage.setItem("lastMonth", monthValue);
+
+  updateUI();              // تحديث المصروفات
+  updateBudgetMonthText(); // تحديث نص الشهر
+}
+
 
 
 

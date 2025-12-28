@@ -2,6 +2,7 @@ body {
     font-family: Cairo, sans-serif;
     background: linear-gradient(135deg, #667eea, #764ba2);
     padding: 20px;
+  padding-bottom: 80px;
 }
 
 .app {
@@ -317,6 +318,7 @@ li {
 .danger  { background: #dc3545; color: #fff; }
 .info    { background: #17a2b8; color: #fff; }
 .logout  { background: #343a40; color: #fff; }
+
 
 
 

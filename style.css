@@ -333,12 +333,25 @@ li {
   font-size: 14px;
   margin-bottom: 8px;
 }
+.month-btn {
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.month-btn:hover {
+  text-decoration: underline;
+}
 
 .primary { background: #007bff; color: #fff; }
 .warning { background: #ffc107; color: #000; }
 .danger  { background: #dc3545; color: #fff; }
 .info    { background: #17a2b8; color: #fff; }
 .logout  { background: #343a40; color: #fff; }
+
 
 
 

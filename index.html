@@ -59,6 +59,33 @@
         <input type="number" id="amount" placeholder="المبلغ">
         <button onclick="addExpense()">إضافة</button>
     </div>
+	<div class="card">
+  <label>إضافة مصروف</label>
+
+  <input type="text" id="title" placeholder="سبب الصرف">
+
+  <input type="number" id="amount" placeholder="المبلغ">
+
+  <!-- اختيار الفئة -->
+  <select id="category">
+    <option value="">اختر الفئة</option>
+    <option value="مواصلات">🚕 مواصلات</option>
+    <option value="طعام">🍔 طعام</option>
+    <option value="ملابس">👕 ملابس</option>
+    <option value="فواتير">💡 فواتير</option>
+    <option value="new">➕ إضافة فئة جديدة</option>
+  </select>
+
+  <!-- يظهر فقط عند اختيار إضافة فئة -->
+  <input
+    type="text"
+    id="newCategory"
+    placeholder="اسم الفئة الجديدة"
+    class="hidden"
+  >
+
+  <button onclick="addExpense()">إضافة</button>
+</div>
 <!-- القائمة المنبثقة -->
 <div id="menu" class="menu hidden">
   <div class="controls">
@@ -98,3 +125,4 @@
 </body>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </html>
+

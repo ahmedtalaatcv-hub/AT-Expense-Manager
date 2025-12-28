@@ -82,9 +82,17 @@
   </h3>
 
   <!-- الشهر والسنة -->
-  <p class="summary-month">
-    📅 <span id="budgetMonthText">—</span>
-  </p>
+<p class="summary-month">
+  📅 
+  <button
+    id="budgetMonthBtn"
+    onclick="openBudgetModal()"
+    class="month-btn"
+  >
+    <span id="budgetMonthText">—</span>
+  </button>
+</p>
+
 
   <div class="summary">
     <p>💸 المصروف: <span id="spent">0</span></p>
@@ -181,6 +189,7 @@
 
 </body>
 </html>
+
 
 
 

@@ -58,6 +58,13 @@
     <button onclick="closeFilterModal()">إغلاق</button>
   </div>
 </div>
+<!-- اختيار شهر مخفي -->
+<input
+  type="month"
+  id="quickMonthPicker"
+  class="hidden"
+  onchange="changeMonthQuick(this.value)"
+>
 
 <body>
 
@@ -85,12 +92,12 @@
 <p class="summary-month">
   📅 
   <button
-    id="budgetMonthBtn"
-    onclick="openBudgetModal()"
-    class="month-btn"
-  >
-    <span id="budgetMonthText">—</span>
-  </button>
+  id="budgetMonthBtn"
+  onclick="openQuickMonthPicker()"
+  class="month-btn"
+>
+  <span id="budgetMonthText">—</span>
+</button>
 </p>
 
 
@@ -189,6 +196,7 @@
 
 </body>
 </html>
+
 
 
 

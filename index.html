@@ -67,23 +67,21 @@
 </div>
     <h1>📊 مصروفاتي الشهرية</h1>
 
-    <div class="card">
-        <label>اختر الشهر</label>
-        <input type="month" id="month" onchange="loadMonth(this.value)">
-    </div>
+   
 
-    <div class="card">
-        <label>الميزانية الشهرية</label>
-        <input type="number" id="budget">
-        <button onclick="setBudget()">حفظ الميزانية</button>
-    </div>
+
 <div id="budgetWarning" class="budget-warning hidden">
     ⚠️ احذر، رصيدك لهذا الشهر أوشك على النفاذ
+<div class="summary-box">
+
+  <h3 class="summary-title">💰 الميزانية الكلية</h3>
+
+  <div class="summary">
+    <p>💸 المصروف: <span id="spent">0</span></p>
+    <p>🟢 المتبقي: <span id="remaining">0</span></p>
+  </div>
+
 </div>
-    <div class="summary">
-        <p>💸 المصروف: <span id="spent">0</span></p>
-        <p>🟢 المتبقي: <span id="remaining">0</span></p>
-    </div>
 
  
 	<div class="card">
@@ -124,33 +122,7 @@
   </div>
 </div>
 
-<!-- زر الفلترة -->
-<button class="filter-btn" onclick="toggleFilters()">
-  🔍 فلترة
-</button>
 
-<!-- صندوق الفلاتر -->
-<div id="filtersBox" class="card hidden">
-
-  <label>فلترة المصروفات</label>
-
-  <!-- فلترة بالأيام -->
-  <input type="date" id="fromDate">
-  <input type="date" id="toDate">
-
-  <!-- فلترة بالفئة -->
-  <select id="filterCategory">
-    <option value="">كل الفئات</option>
-    <option value="مواصلات">🚕 مواصلات</option>
-    <option value="طعام">🍔 طعام</option>
-    <option value="ملابس">👕 ملابس</option>
-    <option value="فواتير">💡 فواتير</option>
-  </select>
-
-  <button onclick="applyFilters()">تطبيق</button>
-  <button onclick="resetFilters()">إلغاء</button>
-
-</div>
 
 
     <ul id="expenseList"></ul>
@@ -194,8 +166,8 @@
 </div>
 
 </body>
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
 </html>
+
 
 
 

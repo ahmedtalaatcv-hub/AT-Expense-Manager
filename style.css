@@ -312,12 +312,19 @@ li {
   transform: scale(0.95);
 }
 
+.summary-month {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
 
 .primary { background: #007bff; color: #fff; }
 .warning { background: #ffc107; color: #000; }
 .danger  { background: #dc3545; color: #fff; }
 .info    { background: #17a2b8; color: #fff; }
 .logout  { background: #343a40; color: #fff; }
+
 
 
 

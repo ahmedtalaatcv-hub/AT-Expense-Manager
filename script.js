@@ -479,4 +479,31 @@ document.getElementById("category").addEventListener("change", function () {
     newCatInput.classList.add("hidden");
   }
 });
+// ===== حذف مصروف =====
+function deleteExpense(index) {
+  if (!confirm("هل أنت متأكد من حذف هذا المصروف؟")) return;
+  if (!currentMonth) return;
+
+  const user = firebase.auth().currentUser;
+  if (!user) return;
+
+  const ref = db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(currentMonth);
+
+  ref.get().then(doc => {
+    if (!doc.exists) return;
+
+    const data = doc.data();
+    const expenses = data.expenses || [];
+
+    expenses.splice(index, 1);
+
+    ref.set({
+      expenses: expenses
+    }, { merge: true });
+  });
+}
+
 

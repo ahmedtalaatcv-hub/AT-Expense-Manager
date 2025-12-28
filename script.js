@@ -600,20 +600,34 @@ function saveBudgetFromModal() {
     return;
   }
 
-  // ربط القيم بالمدخلات الأساسية
+  // ✅ تحديث الشهر الحالي فورًا
   currentMonth = month;
 
-  const monthInput = document.getElementById("month");
-  const budgetInput = document.getElementById("budget");
+  // تحديث المدخلات المخفية
+  document.getElementById("month").value = month;
+  document.getElementById("budget").value = budgetValue;
 
-  if (monthInput) monthInput.value = month;
-  if (budgetInput) budgetInput.value = budgetValue;
+  // ✅ تحديث النص في الواجهة فورًا
+  updateBudgetMonthText();
 
   // حفظ الميزانية
   setBudget();
 
   // إغلاق النافذة
   closeBudgetModal();
+}
+function updateBudgetMonthText() {
+  if (!currentMonth) return;
+
+  const [year, month] = currentMonth.split("-");
+
+  const monthNames = [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+  ];
+
+  const monthText = `${monthNames[Number(month) - 1]} ${year}`;
+  document.getElementById("budgetMonthText").innerText = monthText;
 }
 
 function openBudgetModal() {
@@ -631,6 +645,7 @@ function saveBudgetFromModal() {
   if (!month || !budget) return;
 
   currentMonth = month;
+	updateBudgetMonthText();
   document.getElementById("month").value = month;
   document.getElementById("budget").value = budget;
 
@@ -644,6 +659,7 @@ function openFilterModal() {
 function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
+
 
 
 

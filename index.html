@@ -96,8 +96,18 @@
   onclick="openQuickMonthPicker()"
   class="month-btn"
 >
+  <button id="monthDisplayBtn" onclick="openMonthPicker()" class="month-btn">
   <span id="budgetMonthText">—</span>
 </button>
+
+<!-- input مخفي لاختيار الشهر -->
+<input
+  type="month"
+  id="quickMonthPicker"
+  class="hidden"
+  onchange="changeMonthOnly(this.value)"
+>
+>
 </p>
 
 
@@ -196,6 +206,7 @@
 
 </body>
 </html>
+
 
 
 

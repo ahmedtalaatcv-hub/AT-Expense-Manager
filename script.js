@@ -42,60 +42,51 @@ function setBudget() {
 
 // ===== إضافة مصروف =====
 function addExpense() {
-    if (!currentMonth) return;
+  if (!currentMonth) return;
 
-    const user = firebase.auth().currentUser;
-    if (!user) return;
+  const user = firebase.auth().currentUser;
+  if (!user) return;
 
-    const title = document.getElementById("title").value;
-    const amount = document.getElementById("amount").value;
+  const title = document.getElementById("title").value;
+  const amount = document.getElementById("amount").value;
+  const categorySelect = document.getElementById("category");
+  const newCategoryInput = document.getElementById("newCategory");
 
-    if (!title || !amount) return;
+  let category = categorySelect.value;
 
-    const expense = {
-        title,
-        amount: Number(amount),
-        date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString()
-    };
+  // فئة جديدة
+  if (category === "new") {
+    category = newCategoryInput.value.trim();
+    if (!category) {
+      alert("من فضلك أدخل اسم الفئة");
+      return;
+    }
+  }
 
-    db.collection("users")
-      .doc(user.uid)
-      .collection("months")
-      .doc(currentMonth)
-      .set({
-          expenses: firebase.firestore.FieldValue.arrayUnion(expense)
-      }, { merge: true }); // ⭐⭐⭐ مهم
+  if (!title || !amount || !category) return;
+
+  const expense = {
+    title,
+    amount: Number(amount),
+    category,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString()
+  };
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(currentMonth)
+    .set({
+      expenses: firebase.firestore.FieldValue.arrayUnion(expense)
+    }, { merge: true });
+
+  // تنظيف الخانات
+  categorySelect.value = "";
+  newCategoryInput.value = "";
+  newCategoryInput.classList.add("hidden");
 }
 
-// ===== حذف عملية =====
-function deleteExpense(index) {
-    if (!confirm("هل أنت متأكد من حذف هذه العملية؟")) return;
-    if (!currentMonth) return;
-
-    const user = firebase.auth().currentUser;
-    if (!user) return;
-
-    const ref = db.collection("users")
-                  .doc(user.uid)
-                  .collection("months")
-                  .doc(currentMonth);
-
-    ref.get().then(doc => {
-        if (!doc.exists) return;
-
-        const data = doc.data();
-        const expenses = data.expenses || [];
-
-        expenses.splice(index, 1);
-
-        ref.set({
-            expenses: expenses
-        }, { merge: true })
-        .then(() => {
-        });
-    });
-}
 
 
 // ===== تصفير الميزانية =====
@@ -181,11 +172,12 @@ unsubscribe = db.collection("users")
         expenses.forEach((e, i) => {
             list.innerHTML += `
             <li>
-                <span class="delete" onclick="deleteExpense(${i})">✖</span>
-                <strong>${e.title}</strong><br>
-                💸 ${e.amount} جنيه<br>
-                ⏰ ${e.time} | 📅 ${e.date}
-            </li>`;
+  <span class="delete" onclick="deleteExpense(${i})">✖</span>
+  <strong>${e.title}</strong><br>
+  📂 ${e.category}<br>
+  💸 ${e.amount} جنيه<br>
+  ⏰ ${e.time} | 📅 ${e.date}
+</li>`;
         });
       }, err => console.error(err));
 }
@@ -478,3 +470,13 @@ function toggleMenu() {
     const menu = document.getElementById("menu");
     menu.classList.toggle("hidden");
 }
+document.getElementById("category").addEventListener("change", function () {
+  const newCatInput = document.getElementById("newCategory");
+
+  if (this.value === "new") {
+    newCatInput.classList.remove("hidden");
+  } else {
+    newCatInput.classList.add("hidden");
+  }
+});
+

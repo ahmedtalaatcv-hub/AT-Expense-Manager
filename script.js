@@ -720,6 +720,15 @@ function toggleBottomMenu(btn) {
   btn.classList.add("active");
 }
 
+document.addEventListener("click", function (e) {
+  const menu = document.getElementById("menu");
+  const moreBtn = document.querySelector(".nav-item .icon");
+
+  if (!menu.contains(e.target) && !e.target.closest(".nav-item")) {
+    menu.classList.add("hidden");
+  }
+});
+
 
 
 

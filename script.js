@@ -240,12 +240,17 @@ function exportMonth() {
     let total = 0;
 
     m.expenses.forEach((e, i) => {
-  doc.text(e.title, 170, y);              // السبب
-  doc.text(e.category || "—", 130, y);    // الفئة ✅
-  doc.text(String(e.amount), 100, y);     // المبلغ
-  doc.text(e.date, 60, y);                // التاريخ
-  y += 10;
-});
+        total += Number(e.amount);
+        rows += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${e.title}</td>
+                <td>${e.amount}</td>
+                <td>${e.date}</td>
+                <td>${e.time}</td>
+            </tr>
+        `;
+    });
 
     printWindow.document.write(`
     <html lang="ar" dir="rtl">
@@ -723,7 +728,6 @@ document.addEventListener("click", function (e) {
     menu.classList.add("hidden");
   }
 });
-
 
 
 

@@ -20,8 +20,18 @@
 
     <input type="email" id="email" placeholder="البريد الإلكتروني">
 
-<input type="password" id="password" placeholder="كلمة المرور">
-<input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+<!-- كلمة المرور -->
+<div class="password-field">
+  <input type="password" id="password" placeholder="كلمة المرور">
+  <span class="eye" onclick="togglePassword()">👁️</span>
+</div>
+
+<!-- تأكيد كلمة المرور -->
+<div class="password-field">
+  <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+  <span class="eye" onclick="togglePassword()">👁️</span>
+</div>
+
 
 <label style="font-size:14px;">
   <input type="checkbox" onclick="togglePassword()"> إظهار كلمة المرور
@@ -59,4 +69,5 @@
 <script src="login.js"></script>
 </body>
 </html>
+
 

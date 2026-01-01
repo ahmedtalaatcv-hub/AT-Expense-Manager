@@ -189,24 +189,37 @@
 <!-- jsPDF -->
 <script src="script.js"></script>
 	<!-- الشريط السفلي -->
-<div class="bottom-bar">
-
-  <button onclick="openBudgetModal()">
-    💰<br>الميزانية
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="goHome()">
+    <span class="icon">🏠</span>
+    <span class="text">الرئيسية</span>
   </button>
 
-  <button onclick="openFilterModal()">
-    🔍<br>فلترة
+  <button class="nav-item" onclick="openAddExpense()">
+    <span class="icon">➕</span>
+    <span class="text">إضافة</span>
   </button>
 
-  <button onclick="toggleMenu()">
-    ☰<br>القائمة
+  <button class="nav-item" onclick="openFilterModal()">
+    <span class="icon">🔍</span>
+    <span class="text">فلترة</span>
   </button>
 
-</div>
+  <button class="nav-item" onclick="exportMonth()">
+    <span class="icon">📄</span>
+    <span class="text">تقرير</span>
+  </button>
+
+  <button class="nav-item" onclick="openMenu()">
+    <span class="icon">⚙️</span>
+    <span class="text">المزيد</span>
+  </button>
+</nav>
+
 
 </body>
 </html>
+
 
 
 

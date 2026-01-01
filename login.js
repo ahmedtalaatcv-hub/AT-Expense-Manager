@@ -132,5 +132,11 @@ function togglePassword() {
   pass.type = type;
   confirm.type = type;
 }
+function toggleLoginPassword() {
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+}
+
+
 
 

@@ -693,6 +693,22 @@ function changeMonthOnly(monthValue) {
   updateBudgetMonthText(); // تحديث نص الشهر
 }
 
+function setActiveNav(el) {
+  document.querySelectorAll(".nav-item")
+    .forEach(item => item.classList.remove("active"));
+  el.classList.add("active");
+}
+
+function goHome() {
+  setActiveNav(event.currentTarget);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openAddExpense() {
+  setActiveNav(event.currentTarget);
+  document.getElementById("title").focus();
+}
+
 
 
 

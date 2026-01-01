@@ -693,43 +693,6 @@ function changeMonthOnly(monthValue) {
   updateBudgetMonthText(); // تحديث نص الشهر
 }
 
-function setActiveNav(el) {
-  document.querySelectorAll(".nav-item")
-    .forEach(item => item.classList.remove("active"));
-  el.classList.add("active");
-}
-
-function goHome() {
-  setActiveNav(event.currentTarget);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function openAddExpense() {
-  setActiveNav(event.currentTarget);
-  document.getElementById("title").focus();
-}
-function toggleBottomMenu(btn) {
-  const menu = document.getElementById("menu");
-
-  // إظهار / إخفاء القائمة
-  menu.classList.toggle("hidden");
-
-  // تفعيل الزر
-  document.querySelectorAll(".nav-item")
-    .forEach(item => item.classList.remove("active"));
-  btn.classList.add("active");
-}
-
-document.addEventListener("click", function (e) {
-  const menu = document.getElementById("menu");
-  const moreBtn = document.querySelector(".nav-item .icon");
-
-  if (!menu.contains(e.target) && !e.target.closest(".nav-item")) {
-    menu.classList.add("hidden");
-  }
-});
-
-
 
 
 

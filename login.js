@@ -88,3 +88,48 @@ function showError(error) {
 
   alert(msg);
 }
+/* ======================
+   إنشاء حساب جديد
+====================== */
+function register() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (!email || !password || !confirmPassword) {
+    alert("❌ من فضلك املأ جميع الحقول");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert("❌ كلمتا المرور غير متطابقتين");
+    return;
+  }
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("✅ تم إنشاء الحساب بنجاح");
+      window.location.href = "index.html";
+    })
+    .catch(error => {
+      alert("❌ " + error.message);
+    });
+}
+
+/* ======================
+   إظهار / إخفاء كلمة المرور
+====================== */
+function togglePassword() {
+  const pass = document.getElementById("password");
+  const confirm = document.getElementById("confirmPassword");
+
+  const type = pass.type === "password" ? "text" : "password";
+  pass.type = type;
+  confirm.type = type;
+}
+

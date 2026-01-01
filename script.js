@@ -708,6 +708,18 @@ function openAddExpense() {
   setActiveNav(event.currentTarget);
   document.getElementById("title").focus();
 }
+function toggleBottomMenu(btn) {
+  const menu = document.getElementById("menu");
+
+  // إظهار / إخفاء القائمة
+  menu.classList.toggle("hidden");
+
+  // تفعيل الزر
+  document.querySelectorAll(".nav-item")
+    .forEach(item => item.classList.remove("active"));
+  btn.classList.add("active");
+}
+
 
 
 

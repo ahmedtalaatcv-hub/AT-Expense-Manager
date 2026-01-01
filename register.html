@@ -19,9 +19,16 @@
     <p class="subtitle">أنشئ حسابك وابدأ إدارة مصروفاتك</p>
 
     <input type="email" id="email" placeholder="البريد الإلكتروني">
-    <input type="password" id="password" placeholder="كلمة المرور">
 
-    <button class="btn success" onclick="register()">إنشاء الحساب</button>
+<input type="password" id="password" placeholder="كلمة المرور">
+<input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+
+<label style="font-size:14px;">
+  <input type="checkbox" onclick="togglePassword()"> إظهار كلمة المرور
+</label>
+
+<button class="btn success" onclick="register()">إنشاء الحساب</button>
+
 
     <p style="margin-top:15px;">
       <a href="login.html" style="text-decoration:none;color:#667eea;">
@@ -52,3 +59,4 @@
 <script src="login.js"></script>
 </body>
 </html>
+

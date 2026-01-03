@@ -80,11 +80,12 @@ function addExpense() {
     title,
     amount: Number(amount),
     category,
-    date: new Date().toISOString().slice(0, 10) // YYYY-MM-DD
-    time: new Date().toLocaleTimeString([], {
+    date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+time: new Date().toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit'
 }),
+
 
   };
 
@@ -732,6 +733,7 @@ function parseExpenseDate(dateStr) {
   const [day, month, year] = parts.map(Number);
   return new Date(year, month - 1, day);
 }
+
 
 
 

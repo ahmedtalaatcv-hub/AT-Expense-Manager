@@ -720,21 +720,25 @@ document.addEventListener("click", function (e) {
 function parseExpenseDate(dateStr) {
   if (!dateStr) return null;
 
-  // لو التاريخ محفوظ ISO
-  if (dateStr.includes("-")) {
-    return new Date(dateStr);
-  }
+  // تحويل الأرقام العربية إلى إنجليزية
+  const arabic = "٠١٢٣٤٥٦٧٨٩";
+  const english = "0123456789";
 
-  // دعم التواريخ العربية القديمة
-  const arabicNums = "٠١٢٣٤٥٦٧٨٩";
-  let fixed = dateStr.replace(/[٠-٩]/g, d => arabicNums.indexOf(d));
+  let fixed = dateStr.replace(/[٠-٩]/g, d => english[arabic.indexOf(d)]);
 
-  const parts = fixed.split(/[\/\-]/);
+  // الآن الشكل: 3/1/2026
+  const parts = fixed.split("/");
+
   if (parts.length !== 3) return null;
 
-  const [day, month, year] = parts.map(Number);
-  return new Date(year, month - 1, day);
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1; // JS months start at 0
+  const year = parseInt(parts[2], 10);
+
+  return new Date(year, month, day);
 }
+
+
 
 
 

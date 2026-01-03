@@ -80,7 +80,7 @@ function addExpense() {
     title,
     amount: Number(amount),
     category,
-    date: new Date().toLocaleDateString(),
+    date: new Date().toISOString().slice(0, 10) // YYYY-MM-DD
     time: new Date().toLocaleTimeString([], {
   hour: '2-digit',
   minute: '2-digit'
@@ -548,17 +548,20 @@ function applyFilters() {
   const category = document.getElementById("filterCategory").value;
 
   // فلترة بالتاريخ
-  if (fromDate) {
-    filtered = filtered.filter(e =>
-      new Date(e.date) >= new Date(fromDate)
-    );
-  }
+  // فلترة بالتاريخ
+if (fromDate) {
+  filtered = filtered.filter(e => {
+    const d = parseExpenseDate(e.date);
+    return d && d >= new Date(fromDate);
+  });
+}
 
-  if (toDate) {
-    filtered = filtered.filter(e =>
-      new Date(e.date) <= new Date(toDate)
-    );
-  }
+if (toDate) {
+  filtered = filtered.filter(e => {
+    const d = parseExpenseDate(e.date);
+    return d && d <= new Date(toDate);
+  });
+}
 
   // فلترة بالفئة
   if (category) {
@@ -711,6 +714,25 @@ document.addEventListener("click", function (e) {
     menu.classList.add("hidden");
   }
 });
+function parseExpenseDate(dateStr) {
+  if (!dateStr) return null;
+
+  // لو التاريخ محفوظ ISO
+  if (dateStr.includes("-")) {
+    return new Date(dateStr);
+  }
+
+  // دعم التواريخ العربية القديمة
+  const arabicNums = "٠١٢٣٤٥٦٧٨٩";
+  let fixed = dateStr.replace(/[٠-٩]/g, d => arabicNums.indexOf(d));
+
+  const parts = fixed.split(/[\/\-]/);
+  if (parts.length !== 3) return null;
+
+  const [day, month, year] = parts.map(Number);
+  return new Date(year, month - 1, day);
+}
+
 
 
 

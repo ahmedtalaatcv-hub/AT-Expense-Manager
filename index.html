@@ -84,10 +84,17 @@
 <!-- ملخص الميزانية -->
 <div class="summary-box">
 
-  <h3 class="summary-title">
-    💰 الميزانية الكلية:
-    <span id="totalBudget">0</span>
-  </h3>
+<div class="total-budget">
+  <span>💰الميزانية الكلية:</span>
+  <strong id="totalBudget">0</strong>
+  <span 
+    class="edit-budget-icon" 
+    onclick="openBudgetModal()" 
+    title="تعديل الميزانية">
+    ✏️
+  </span>
+</div>
+
 
   <!-- الشهر والسنة -->
 <p class="summary-month">
@@ -220,6 +227,7 @@
 
 </body>
 </html>
+
 
 
 

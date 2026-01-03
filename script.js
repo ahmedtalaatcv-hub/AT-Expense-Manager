@@ -720,23 +720,48 @@ document.addEventListener("click", function (e) {
 function parseExpenseDate(dateStr) {
   if (!dateStr) return null;
 
-  // تحويل الأرقام العربية إلى إنجليزية
+  // 1) نظّف المسافات والسلاشات الزايدة
+  let s = String(dateStr).trim().replace(/\/+$/, "");
+
+  // 2) حوّل الأرقام العربية إلى إنجليزية
   const arabic = "٠١٢٣٤٥٦٧٨٩";
-  const english = "0123456789";
+  s = s.replace(/[٠-٩]/g, d => String(arabic.indexOf(d)));
 
-  let fixed = dateStr.replace(/[٠-٩]/g, d => english[arabic.indexOf(d)]);
+  // 3) دعم ISO: 2026-01-03 أو 2026/1/3
+  s = s.replace(/\./g, "/").replace(/-/g, "/");
 
-  // الآن الشكل: 3/1/2026
-  const parts = fixed.split("/");
-
+  const parts = s.split("/").map(p => p.trim()).filter(Boolean);
   if (parts.length !== 3) return null;
 
-  const day = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10) - 1; // JS months start at 0
-  const year = parseInt(parts[2], 10);
+  const a = parseInt(parts[0], 10);
+  const b = parseInt(parts[1], 10);
+  const c = parseInt(parts[2], 10);
+  if ([a, b, c].some(n => Number.isNaN(n))) return null;
 
-  return new Date(year, month, day);
+  // 4) حدّد هل الصيغة Y/M/D ولا D/M/Y
+  // لو أول رقم 4 أرقام -> سنة/شهر/يوم
+  let year, month, day;
+
+  if (parts[0].length === 4) {
+    year = a; month = b; day = c;          // YYYY/MM/DD
+  } else if (parts[2].length === 4) {
+    day = a; month = b; year = c;          // DD/MM/YYYY
+  } else {
+    // fallback لو مش واضح: اعتبرها DD/MM/YY (نادر)
+    day = a; month = b; year = c;
+    if (year < 100) year += 2000;
+  }
+
+  // 5) تحقق بسيط من الحدود
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+
+  const d = new Date(year, month - 1, day);
+  // تأكيد إنه تاريخ صحيح (مثلاً 31/2)
+  if (d.getFullYear() !== year || d.getMonth() !== month - 1 || d.getDate() !== day) return null;
+
+  return d;
 }
+
 
 
 

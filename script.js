@@ -558,7 +558,7 @@ function applyFilters() {
 
   if (toDate) {
     const to = new Date(toDate);
-    to.setHours(23, 59, 59, 999); // عشان يشمل اليوم كله
+    to.setHours(23, 59, 59, 999); // يشمل اليوم كله
     filtered = filtered.filter(e => {
       const d = parseExpenseDate(e.date);
       return d && d <= to;
@@ -735,6 +735,7 @@ function parseExpenseDate(dateStr) {
   const [day, month, year] = parts.map(Number);
   return new Date(year, month - 1, day);
 }
+
 
 
 

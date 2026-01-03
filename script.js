@@ -548,21 +548,25 @@ function applyFilters() {
   const toDate = document.getElementById("toDate").value;
   const category = document.getElementById("filterCategory").value;
 
-  // فلترة بالتاريخ
-  // فلترة بالتاريخ
-if (fromDate) {
-  filtered = filtered.filter(e => {
-    const d = parseExpenseDate(e.date);
-    return d && d >= new Date(fromDate);
-  });
-}
+  // فلترة بالتاريخ (باستخدام parseExpenseDate عشان يدعم التاريخ القديم)
+  if (fromDate) {
+    const from = new Date(fromDate);
+    filtered = filtered.filter(e => {
+      const d = parseExpenseDate(e.date);
+      return d && d >= from;
+    });
+  }
 
-if (toDate) {
-  filtered = filtered.filter(e => {
-    const d = parseExpenseDate(e.date);
-    return d && d <= new Date(toDate);
-  });
-}
+  if (toDate) {
+    const to = new Date(toDate);
+    // لو عايز تشمل اليوم كله (مش لحد بداية اليوم)
+    to.setHours(23, 59, 59, 999);
+
+    filtered = filtered.filter(e => {
+      const d = parseExpenseDate(e.date);
+      return d && d <= to;
+    });
+  }
 
   // فلترة بالفئة
   if (category) {
@@ -571,6 +575,7 @@ if (toDate) {
 
   renderExpenses(filtered);
 }
+
 function resetFilters() {
   document.getElementById("fromDate").value = "";
   document.getElementById("toDate").value = "";
@@ -733,6 +738,7 @@ function parseExpenseDate(dateStr) {
   const [day, month, year] = parts.map(Number);
   return new Date(year, month - 1, day);
 }
+
 
 
 

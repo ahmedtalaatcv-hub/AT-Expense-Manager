@@ -583,9 +583,7 @@ function openBudgetModal() {
   document.getElementById("budgetModal").classList.remove("hidden");
 }
 
-function closeBudgetModal() {
-  document.getElementById("budgetModal").classList.add("hidden");
-}
+
 
 function saveBudgetFromModal() {
   const month = document.getElementById("modalMonth").value;
@@ -639,20 +637,7 @@ function closeBudgetModal() {
   document.getElementById("budgetModal").classList.add("hidden");
 }
 
-function saveBudgetFromModal() {
-  const month = document.getElementById("modalMonth").value;
-  const budget = document.getElementById("modalBudget").value;
 
-  if (!month || !budget) return;
-
-  currentMonth = month;
-	updateBudgetMonthText();
-  document.getElementById("month").value = month;
-  document.getElementById("budget").value = budget;
-
-  setBudget();
-  closeBudgetModal();
-}
 function openFilterModal() {
   document.getElementById("filterModal").classList.remove("hidden");
 }
@@ -661,37 +646,13 @@ function closeFilterModal() {
   document.getElementById("filterModal").classList.add("hidden");
 }
 
-function openQuickMonthPicker() {
-  document.getElementById("quickMonthPicker").click();
-}
 
-function changeMonthQuick(value) {
-  if (!value) return;
 
-  currentMonth = value;
 
-  // تحديث النص
-  updateBudgetMonthText();
 
-  // تحميل بيانات الشهر
-  loadMonth(value);
-}
 
-// فتح اختيار الشهر فقط
-function openMonthPicker() {
-  document.getElementById("quickMonthPicker").click();
-}
 
-// تغيير الشهر بدون فتح نافذة الميزانية
-function changeMonthOnly(monthValue) {
-  if (!monthValue) return;
 
-  currentMonth = monthValue;
-  localStorage.setItem("lastMonth", monthValue);
-
-  updateUI();              // تحديث المصروفات
-  updateBudgetMonthText(); // تحديث نص الشهر
-}
 function toggleBottomMenu(btn) {
   const menu = document.getElementById("menu");
 
@@ -712,20 +673,6 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// ===== (1) فتح النافذة =====
-function openBudgetModal() {
-  document.getElementById("budgetModal").classList.remove("hidden");
-
-  // افتح على الشهر الحالي
-  const m = currentMonth || new Date().toISOString().slice(0, 7);
-  document.getElementById("modalMonth").value = m;
-
-  // حمل ميزانية الشهر المعروض
-  loadBudgetToModal(m);
-
-  // اربط الأحداث مرة واحدة فقط
-  bindBudgetModalEventsOnce();
-}
 
 function closeBudgetModal() {
   document.getElementById("budgetModal").classList.add("hidden");
@@ -831,6 +778,117 @@ function bindBudgetModalEventsOnce() {
     }, 500);
   });
 }
+// =====================
+// ميزانية الشهر - اختيار شهر + حفظ تلقائي
+// =====================
+
+let _budgetModalBound = false;
+let _autoSaveTimer = null;
+
+function openBudgetModal() {
+  document.getElementById("budgetModal").classList.remove("hidden");
+
+  const monthEl = document.getElementById("modalMonth");
+  const m = currentMonth || new Date().toISOString().slice(0, 7);
+
+  monthEl.value = m;
+  currentMonth = m;
+  localStorage.setItem("lastMonth", m);
+
+  loadBudgetToModal(m);
+  bindBudgetModalEventsOnce();
+}
+
+function closeBudgetModal() {
+  document.getElementById("budgetModal").classList.add("hidden");
+}
+
+function bindBudgetModalEventsOnce() {
+  if (_budgetModalBound) return;
+  _budgetModalBound = true;
+
+  const monthEl = document.getElementById("modalMonth");
+  const budgetEl = document.getElementById("modalBudget");
+
+  // تغيير الشهر
+  monthEl.addEventListener("change", () => {
+    const month = monthEl.value;
+    if (!month) return;
+
+    currentMonth = month;
+    localStorage.setItem("lastMonth", month);
+
+    loadBudgetToModal(month);
+    updateUI();
+  });
+
+  // حفظ تلقائي عند كتابة الميزانية
+  budgetEl.addEventListener("input", () => {
+    const month = monthEl.value;
+    const val = budgetEl.value;
+
+    clearTimeout(_autoSaveTimer);
+    _autoSaveTimer = setTimeout(() => {
+      autoSaveBudget(month, val);
+    }, 500);
+  });
+}
+
+function loadBudgetToModal(month) {
+  const user = firebase.auth().currentUser;
+  if (!user || !month) return;
+
+  const budgetEl = document.getElementById("modalBudget");
+  budgetEl.value = "";
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .get()
+    .then(doc => {
+      const budget = doc.exists ? Number(doc.data().budget || 0) : 0;
+      budgetEl.value = budget ? budget : "";
+    });
+}
+
+function autoSaveBudget(month, budgetValue) {
+  const user = firebase.auth().currentUser;
+  if (!user || !month) return;
+
+  if (budgetValue === "") return;
+
+  const budget = Number(budgetValue);
+  if (isNaN(budget) || budget < 0) return;
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .set({ budget }, { merge: true })
+    .then(() => updateUI());
+}
+
+function resetBudgetFromModal() {
+  const month = document.getElementById("modalMonth").value;
+  if (!month) return;
+
+  if (!confirm("هل تريد تصفير ميزانية هذا الشهر؟")) return;
+
+  const user = firebase.auth().currentUser;
+  if (!user) return;
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .set({ budget: 0 }, { merge: true })
+    .then(() => {
+      document.getElementById("modalBudget").value = "";
+      updateUI();
+    });
+}
+
 
 
 

@@ -574,6 +574,7 @@ function applyFilters() {
 
 
 
+
 function resetFilters() {
   document.getElementById("fromDate").value = "";
   document.getElementById("toDate").value = "";
@@ -721,47 +722,40 @@ document.addEventListener("click", function (e) {
 function parseExpenseDate(dateStr) {
   if (!dateStr) return null;
 
-  // 1) نظّف المسافات والسلاشات الزايدة
+  // شيل السلاشات اللي في الآخر زي ٢٠٢٦/٣/١/
   let s = String(dateStr).trim().replace(/\/+$/, "");
 
-  // 2) حوّل الأرقام العربية إلى إنجليزية
+  // حوّل الأرقام العربية لإنجليزية
   const arabic = "٠١٢٣٤٥٦٧٨٩";
   s = s.replace(/[٠-٩]/g, d => String(arabic.indexOf(d)));
 
-  // 3) دعم ISO: 2026-01-03 أو 2026/1/3
-  s = s.replace(/\./g, "/").replace(/-/g, "/");
+  // دعم 2026-01-03
+  if (s.includes("-")) {
+    const d = new Date(s);
+    return isNaN(d) ? null : d;
+  }
 
   const parts = s.split("/").map(p => p.trim()).filter(Boolean);
   if (parts.length !== 3) return null;
 
-  const a = parseInt(parts[0], 10);
-  const b = parseInt(parts[1], 10);
-  const c = parseInt(parts[2], 10);
+  const a = Number(parts[0]), b = Number(parts[1]), c = Number(parts[2]);
   if ([a, b, c].some(n => Number.isNaN(n))) return null;
 
-  // 4) حدّد هل الصيغة Y/M/D ولا D/M/Y
-  // لو أول رقم 4 أرقام -> سنة/شهر/يوم
   let year, month, day;
 
+  // YYYY/MM/DD
   if (parts[0].length === 4) {
-    year = a; month = b; day = c;          // YYYY/MM/DD
-  } else if (parts[2].length === 4) {
-    day = a; month = b; year = c;          // DD/MM/YYYY
+    year = a; month = b; day = c;
   } else {
-    // fallback لو مش واضح: اعتبرها DD/MM/YY (نادر)
+    // DD/MM/YYYY
     day = a; month = b; year = c;
-    if (year < 100) year += 2000;
   }
 
-  // 5) تحقق بسيط من الحدود
-  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
-
   const d = new Date(year, month - 1, day);
-  // تأكيد إنه تاريخ صحيح (مثلاً 31/2)
-  if (d.getFullYear() !== year || d.getMonth() !== month - 1 || d.getDate() !== day) return null;
-
-  return d;
+  return isNaN(d) ? null : d;
 }
+
+
 
 
 

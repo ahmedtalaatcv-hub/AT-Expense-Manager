@@ -543,9 +543,8 @@ function renderExpenses(expenses) {
 }
 function applyFilters() {
   let filtered = [...allExpenses];
-
   const fromDate = document.getElementById("fromDate").value;
-  const toDate = document.getElementById("toDate").value;
+  const toDate = document.getElementById("toDatenew Date").value;
   const category = document.getElementById("filterCategory").value;
 
   // فلترة بالتاريخ (باستخدام parseExpenseDate عشان يدعم التاريخ القديم)
@@ -738,6 +737,7 @@ function parseExpenseDate(dateStr) {
   const [day, month, year] = parts.map(Number);
   return new Date(year, month - 1, day);
 }
+
 
 
 

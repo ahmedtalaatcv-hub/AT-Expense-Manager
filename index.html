@@ -91,24 +91,18 @@
 
   <!-- الشهر والسنة -->
 <p class="summary-month">
-  📅 
-  <button
-  id="budgetMonthBtn"
-  onclick="openQuickMonthPicker()"
-  class="month-btn"
->
+  📅
   <button id="monthDisplayBtn" onclick="openMonthPicker()" class="month-btn">
-  <span id="budgetMonthText">—</span>
-</button>
+    <span id="budgetMonthText">—</span>
+  </button>
 
-<!-- input مخفي لاختيار الشهر -->
-<input
-  type="month"
-  id="quickMonthPicker"
-  class="hidden"
-  onchange="changeMonthOnly(this.value)"
->
->
+  <!-- input مخفي لاختيار الشهر (واحد فقط) -->
+  <input
+    type="month"
+    id="quickMonthPicker"
+    class="hidden"
+    onchange="changeMonthOnly(this.value)"
+  >
 </p>
 
 
@@ -219,7 +213,11 @@
 
 
 </body>
+<input type="hidden" id="month">
+<input type="hidden" id="budget">
+
 </html>
+
 
 
 

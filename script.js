@@ -712,6 +712,128 @@ document.addEventListener("click", function (e) {
   }
 });
 
+// ===== (1) فتح النافذة =====
+function openBudgetModal() {
+  document.getElementById("budgetModal").classList.remove("hidden");
+
+  // افتح على الشهر الحالي
+  const m = currentMonth || new Date().toISOString().slice(0, 7);
+  document.getElementById("modalMonth").value = m;
+
+  // حمل ميزانية الشهر المعروض
+  loadBudgetToModal(m);
+
+  // اربط الأحداث مرة واحدة فقط
+  bindBudgetModalEventsOnce();
+}
+
+function closeBudgetModal() {
+  document.getElementById("budgetModal").classList.add("hidden");
+}
+
+// ===== (2) تحميل ميزانية الشهر المختار داخل الخانة =====
+function loadBudgetToModal(month) {
+  const user = firebase.auth().currentUser;
+  if (!user || !month) return;
+
+  // امسح الخانة مؤقتًا لحد ما نحمل
+  document.getElementById("modalBudget").value = "";
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .get()
+    .then((doc) => {
+      const budget = doc.exists ? Number(doc.data().budget || 0) : 0;
+      document.getElementById("modalBudget").value = budget || "";
+    });
+}
+
+// ===== (3) حفظ تلقائي (مع debounce) =====
+let _autoSaveTimer = null;
+
+function autoSaveBudget(month, budgetValue) {
+  const user = firebase.auth().currentUser;
+  if (!user || !month) return;
+
+  const budget = Number(budgetValue);
+  // لو فاضي أو سالب: ما نحفظش
+  if (!budgetValue || budget < 0) return;
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .set({ budget }, { merge: true })
+    .then(() => {
+      // خلي الشهر الحالي هو اللي اخترته
+      currentMonth = month;
+      localStorage.setItem("lastMonth", month);
+      updateUI(); // تحدث الملخص فورًا
+    });
+}
+
+// ===== (4) تصفير ميزانية الشهر المختار من داخل النافذة =====
+function resetBudgetFromModal() {
+  const month = document.getElementById("modalMonth").value;
+  if (!month) return;
+
+  if (!confirm("هل تريد تصفير ميزانية هذا الشهر؟")) return;
+
+  const user = firebase.auth().currentUser;
+  if (!user) return;
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(month)
+    .set({ budget: 0 }, { merge: true })
+    .then(() => {
+      document.getElementById("modalBudget").value = "";
+      currentMonth = month;
+      localStorage.setItem("lastMonth", month);
+      updateUI();
+    });
+}
+
+// ===== ربط أحداث النافذة مرة واحدة فقط =====
+let _budgetModalBound = false;
+
+function bindBudgetModalEventsOnce() {
+  if (_budgetModalBound) return;
+  _budgetModalBound = true;
+
+  const monthEl = document.getElementById("modalMonth");
+  const budgetEl = document.getElementById("modalBudget");
+
+  // عند تغيير الشهر: حمّل ميزانيته في الخانة
+  monthEl.addEventListener("change", () => {
+    const month = monthEl.value;
+    loadBudgetToModal(month);
+
+    // كمان خلّي currentMonth يتغير عشان تتحدث الواجهة على نفس الشهر
+    if (month) {
+      currentMonth = month;
+      localStorage.setItem("lastMonth", month);
+      updateUI();
+    }
+  });
+
+  // عند كتابة الميزانية: احفظ تلقائيًا بعد 500ms من آخر كتابة
+  budgetEl.addEventListener("input", () => {
+    const month = monthEl.value;
+    const val = budgetEl.value;
+
+    clearTimeout(_autoSaveTimer);
+    _autoSaveTimer = setTimeout(() => {
+      autoSaveBudget(month, val);
+    }, 500);
+  });
+}
+
+
+
 
 
 

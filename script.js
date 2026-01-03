@@ -543,11 +543,11 @@ function renderExpenses(expenses) {
 }
 function applyFilters() {
   let filtered = [...allExpenses];
+
   const fromDate = document.getElementById("fromDate").value;
-  const toDate = document.getElementById("toDatenew Date").value;
+  const toDate = document.getElementById("toDate").value;
   const category = document.getElementById("filterCategory").value;
 
-  // فلترة بالتاريخ (باستخدام parseExpenseDate عشان يدعم التاريخ القديم)
   if (fromDate) {
     const from = new Date(fromDate);
     filtered = filtered.filter(e => {
@@ -558,22 +558,20 @@ function applyFilters() {
 
   if (toDate) {
     const to = new Date(toDate);
-    // لو عايز تشمل اليوم كله (مش لحد بداية اليوم)
-    to.setHours(23, 59, 59, 999);
-
+    to.setHours(23, 59, 59, 999); // عشان يشمل اليوم كله
     filtered = filtered.filter(e => {
       const d = parseExpenseDate(e.date);
       return d && d <= to;
     });
   }
 
-  // فلترة بالفئة
   if (category) {
     filtered = filtered.filter(e => e.category === category);
   }
 
   renderExpenses(filtered);
 }
+
 
 function resetFilters() {
   document.getElementById("fromDate").value = "";
@@ -737,6 +735,7 @@ function parseExpenseDate(dateStr) {
   const [day, month, year] = parts.map(Number);
   return new Date(year, month - 1, day);
 }
+
 
 
 

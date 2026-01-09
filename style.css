@@ -429,3 +429,8 @@ body {
 
 
 
+
+
+/* مصروف اليوم/الأسبوع */
+.subline { font-size: 0.95rem; margin: 6px 0; }
+.subline small { font-size: 0.75rem; opacity: 0.8; }

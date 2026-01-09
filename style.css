@@ -477,3 +477,109 @@ body {
 .dw-meta{ opacity:.7; font-size:12px; white-space:nowrap; }
 .dw-amt{ font-weight:700; white-space:nowrap; }
 .dw-empty{ opacity:.7; padding:6px 0; }
+
+
+/* ===== Period (Daily/Weekly) cards ===== */
+.period-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+@media (max-width: 900px){
+  .period-grid{ grid-template-columns: 1fr; }
+}
+.period-card{
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  padding: 14px 14px 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+.period-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+.period-title{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap: 8px;
+  font-weight: 700;
+}
+.period-icon{
+  font-size: 20px;
+  line-height: 1;
+}
+.period-sub{
+  font-weight: 500;
+  opacity: 0.75;
+  font-size: 12px;
+}
+.period-amount{
+  font-weight: 800;
+  font-size: 20px;
+  white-space: nowrap;
+}
+.period-details{
+  margin-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.12);
+  padding-top: 10px;
+}
+.period-details > summary{
+  cursor: pointer;
+  user-select:none;
+  list-style:none;
+  font-weight: 700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 8px;
+}
+.period-details > summary::-webkit-details-marker{ display:none; }
+.period-details > summary:after{
+  content:"▾";
+  opacity:0.65;
+  transform: rotate(0deg);
+  transition: transform 180ms ease;
+}
+.period-details[open] > summary:after{
+  transform: rotate(180deg);
+}
+.period-body{
+  margin-top: 10px;
+}
+.period-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+  max-height: 260px;
+  overflow:auto;
+}
+.period-list li{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.period-item-title{
+  font-weight:700;
+}
+.period-item-meta{
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+.period-item-amount{
+  font-weight:800;
+  white-space:nowrap;
+}

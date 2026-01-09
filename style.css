@@ -434,3 +434,46 @@ body {
 /* مصروف اليوم/الأسبوع */
 .subline { font-size: 0.95rem; margin: 6px 0; }
 .subline small { font-size: 0.75rem; opacity: 0.8; }
+
+
+/* ===== تفاصيل مصروف اليوم/الأسبوع ===== */
+.day-week-lists{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin-top:12px;
+}
+@media (min-width: 720px){
+  .day-week-lists{ grid-template-columns:1fr 1fr; }
+}
+.dw-card{
+  background:#fff;
+  border:1px solid #e6e6e6;
+  border-radius:12px;
+  padding:10px 12px;
+}
+.dw-card h4{
+  margin:0 0 8px 0;
+  font-size:14px;
+}
+.dw-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  max-height:180px;
+  overflow:auto;
+}
+.dw-item{
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  gap:10px;
+  padding:6px 0;
+  border-bottom:1px dashed #eee;
+  align-items:center;
+  font-size:13px;
+}
+.dw-item:last-child{ border-bottom:none; }
+.dw-title{ font-weight:600; }
+.dw-meta{ opacity:.7; font-size:12px; white-space:nowrap; }
+.dw-amt{ font-weight:700; white-space:nowrap; }
+.dw-empty{ opacity:.7; padding:6px 0; }

@@ -1,3 +1,22 @@
+
+function renderPeriodItem(tx){
+  // tx: { title, amount, createdAtMs/createdAtISO }
+  const title = (tx.title || tx.reason || tx.note || "").toString().trim() || "مصروف";
+  const amt = typeof tx.amount === "number" ? tx.amount : Number(tx.amount || 0);
+  const tms = tx.createdAtMs || (tx.createdAtISO ? Date.parse(tx.createdAtISO) : null);
+  const d = tms ? new Date(tms) : null;
+  const timeStr = d ? d.toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" }) : "";
+  const dateStr = d ? d.toLocaleDateString("ar-EG") : "";
+  return `
+    <li>
+      <div>
+        <div class="period-item-title">${escapeHTML(title)}</div>
+        <div class="period-item-meta">${[dateStr, timeStr].filter(Boolean).join(" • ")}</div>
+      </div>
+      <div class="period-item-amount">${formatCurrency(amt)}</div>
+    </li>`;
+}
+
 firebase.auth().onAuthStateChanged(user => {
   if (!user) {
     window.location.href = "login.html";

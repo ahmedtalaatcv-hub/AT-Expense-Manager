@@ -707,3 +707,16 @@ body {
 .topbar-spacer{
   height: 10px;
 }
+
+
+/* ===== Topbar compact sizing (Requested) ===== */
+.topbar-inner{ padding: 8px 12px 8px; }
+.brand-title{ font-size: 16px; }
+.month-chip{ padding: 5px 9px; font-size: 12px; }
+.icon-btn{ padding: 7px 9px; font-size: 15px; }
+.stats{ margin-top: 8px; gap: 8px; }
+.stat{ padding: 8px 9px 7px; border-radius: 13px; }
+.stat-value{ font-size: 16px; }
+.stat-label{ font-size: 11px; margin-bottom: 5px; }
+.topbar-spacer{ height: 8px; }
+.icon-btn.danger{ border-color: rgba(0,0,0,0.20); }

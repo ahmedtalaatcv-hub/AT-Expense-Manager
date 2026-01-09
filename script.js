@@ -51,6 +51,87 @@ function setBudget() {
 }
 
 
+
+// ===== إعدادات وفوائد (مصروف اليوم/الأسبوع) =====
+const DAY_START_HOUR = 4; // يبدأ اليوم من 4 صباحاً
+
+function getBusinessDayStartMs(now = new Date()) {
+  const d = new Date(now);
+  d.setMinutes(0, 0, 0);
+  if (d.getHours() < DAY_START_HOUR) {
+    d.setDate(d.getDate() - 1);
+  }
+  d.setHours(DAY_START_HOUR, 0, 0, 0);
+  return d.getTime();
+}
+
+function getWeekStartMs(now = new Date()) {
+  // الأسبوع: من السبت إلى الجمعة (ونفس حد 4 صباحاً)
+  const dayStartMs = getBusinessDayStartMs(now);
+  const dayStart = new Date(dayStartMs);
+  const dow = dayStart.getDay(); // 0=الأحد ... 6=السبت
+  const diffToSaturday = (dow + 1) % 7; // السبت => 0, الأحد => 1, ... الجمعة => 6
+  const weekStart = new Date(dayStartMs);
+  weekStart.setDate(weekStart.getDate() - diffToSaturday);
+  weekStart.setHours(DAY_START_HOUR, 0, 0, 0);
+  return weekStart.getTime();
+}
+
+function getExpenseMs(e) {
+  if (!e) return NaN;
+
+  // الأفضل: createdAtMs
+  if (typeof e.createdAtMs === "number") return e.createdAtMs;
+
+  // بديل: createdAtISO
+  if (typeof e.createdAtISO === "string") {
+    const t = Date.parse(e.createdAtISO);
+    if (!Number.isNaN(t)) return t;
+  }
+
+  // لو Firestore Timestamp اتخزن بشكل مختلف
+  if (e.createdAt && typeof e.createdAt.toDate === "function") {
+    return e.createdAt.toDate().getTime();
+  }
+
+  // آخر حل: نعتمد على date فقط (وقت افتراضي 12:00) — للبيانات القديمة
+  if (typeof e.date === "string") {
+    const t = Date.parse(e.date + "T12:00:00");
+    if (!Number.isNaN(t)) return t;
+  }
+
+  return NaN;
+}
+
+function calcDayWeekTotals(expenses, now = new Date()) {
+  const dayStartMs = getBusinessDayStartMs(now);
+  const dayEndMs = dayStartMs + 24 * 60 * 60 * 1000;
+
+  const weekStartMs = getWeekStartMs(now);
+  const weekEndMs = weekStartMs + 7 * 24 * 60 * 60 * 1000;
+
+  let dayTotal = 0;
+  let weekTotal = 0;
+
+  (expenses || []).forEach(e => {
+    const t = getExpenseMs(e);
+    const amt = Number(e.amount) || 0;
+
+    if (!Number.isNaN(t)) {
+      if (t >= dayStartMs && t < dayEndMs) dayTotal += amt;
+      if (t >= weekStartMs && t < weekEndMs) weekTotal += amt;
+    }
+  });
+
+  return {
+    dayTotal,
+    weekTotal,
+    dayStart: new Date(dayStartMs),
+    dayEnd: new Date(dayEndMs - 1),
+    weekStart: new Date(weekStartMs),
+    weekEnd: new Date(weekEndMs - 1),
+  };
+}
 // ===== إضافة مصروف =====
 function addExpense() {
   if (!currentMonth) return;
@@ -76,17 +157,22 @@ function addExpense() {
 
   if (!title || !amount || !category) return;
 
+  const now = new Date();
+  // تاريخ محلي (YYYY-MM-DD) بدل toISOString() عشان مايحصلش اختلاف منطقة زمنية
+  const localDate = now.toLocaleDateString('en-CA'); // en-CA => YYYY-MM-DD
+
   const expense = {
     title,
     amount: Number(amount),
     category,
-    date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
-time: new Date().toLocaleTimeString([], {
-  hour: '2-digit',
-  minute: '2-digit'
-}),
 
+    // للاحتفاظ بالعرض القديم
+    date: localDate,
+    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 
+    // مهم للحسابات اليومية/الأسبوعية بدقة (خصوصاً حد 4 صباحاً)
+    createdAtISO: now.toISOString(),
+    createdAtMs: now.getTime()
   };
 
   db.collection("users")
@@ -177,6 +263,23 @@ renderExpenses(expenses);
 
         document.getElementById("spent").innerText = spent;
         document.getElementById("remaining").innerText = remaining;
+
+        // ===== مصروف اليوم (4 صباحاً -> 11:59 مساء) ومصروف الأسبوع (السبت -> الجمعة) =====
+        const totals = calcDayWeekTotals(expenses, new Date());
+        const daySpentEl = document.getElementById("daySpent");
+        const weekSpentEl = document.getElementById("weekSpent");
+        if (daySpentEl) daySpentEl.innerText = totals.dayTotal;
+        if (weekSpentEl) weekSpentEl.innerText = totals.weekTotal;
+
+        const dayRangeEl = document.getElementById("dayRange");
+        const weekRangeEl = document.getElementById("weekRange");
+        if (dayRangeEl) {
+          dayRangeEl.innerText = `(${totals.dayStart.toLocaleString('ar-EG', { weekday:'long', year:'numeric', month:'2-digit', day:'2-digit' })} - ${totals.dayEnd.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' })})`;
+        }
+        if (weekRangeEl) {
+          weekRangeEl.innerText = `(${totals.weekStart.toLocaleDateString('ar-EG', { year:'numeric', month:'2-digit', day:'2-digit' })} - ${totals.weekEnd.toLocaleDateString('ar-EG', { year:'numeric', month:'2-digit', day:'2-digit' })})`;
+        }
+
 
         const warningBox = document.getElementById("budgetWarning");
 

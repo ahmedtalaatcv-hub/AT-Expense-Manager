@@ -211,6 +211,29 @@ function addExpense() {
 
 
 // ===== تصفير الميزانية =====
+
+// ===== حذف المصروفات القديمة (لهذا الشهر فقط) =====
+function clearCurrentMonthExpenses(){
+  if (!currentMonth) return;
+
+  const user = firebase.auth().currentUser;
+  if (!user) return;
+
+  const ok = confirm("هل تريد حذف كل مصروفات هذا الشهر؟ لا يمكن التراجع.");
+  if (!ok) return;
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("months")
+    .doc(currentMonth)
+    .set({ expenses: [] }, { merge: true })
+    .then(() => updateUI())
+    .catch((err) => {
+      console.error(err);
+      alert("حدث خطأ أثناء الحذف. حاول مرة أخرى.");
+    });
+}
+
 function resetBudget() {
     if (!confirm("هل تريد تصفير الميزانية؟")) return;
     if (!currentMonth) return;

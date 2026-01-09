@@ -73,45 +73,67 @@
 <div class="logo">
     <img src="logo.png" alt="App Logo">
 </div>
-    <h1>📊 مصروفاتي الشهرية</h1>
+    <header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="topbar-brand">
+        <span class="brand-emoji">💼</span>
+        <div class="brand-text">
+          <div class="brand-title">مصروفاتي الشهرية</div>
+          <button id="monthDisplayBtn" onclick="openMonthPicker()" class="month-chip" type="button" aria-label="اختيار الشهر">
+            📅 <span id="budgetMonthText">—</span>
+          </button>
+        </div>
+      </div>
 
-   
-<!-- تحذير الميزانية -->
-<div id="budgetWarning" class="budget-warning hidden">
-  ⚠️ احذر، رصيدك لهذا الشهر أوشك على النفاذ
-</div>
+      <div class="topbar-actions">
+        <button class="icon-btn" type="button" onclick="openBudgetModal()" title="تعديل الميزانية" aria-label="تعديل الميزانية">✏️</button>
+      </div>
+    </div>
 
-<!-- ملخص الميزانية -->
-<div class="summary-box">
+    <!-- input مخفي لاختيار الشهر (مرّة واحدة فقط) -->
 
-<div class="total-budget">
-  <span>💰الميزانية الكلية:</span>
-  <strong id="totalBudget">0</strong>
-  <span 
-    class="edit-budget-icon" 
-    onclick="openBudgetModal()" 
-    title="تعديل الميزانية">
-    ✏️
-  </span>
-</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">💰 الميزانية الكلية</div>
+        <div class="stat-value" id="totalBudget">0</div>
+      </div>
 
+      <div class="stat">
+        <div class="stat-label">💸 إجمالي المصروف</div>
+        <div class="stat-value" id="spent">0</div>
+      </div>
 
-  <!-- الشهر والسنة -->
+      <div class="stat highlight">
+        <div class="stat-label">🟢 المتبقي</div>
+        <div class="stat-value" id="remaining">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">🕓 مصروف اليوم</div>
+        <div class="stat-value" id="daySpent">0</div>
+        <div class="stat-sub" id="dayRange"></div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">📆 مصروف الأسبوع</div>
+        <div class="stat-value" id="weekSpent">0</div>
+        <div class="stat-sub" id="weekRange"></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="topbar-spacer" aria-hidden="true"></div>
+
+<div id="budgetWarning" class="budget-warning hidden">⚠️ احذر، رصيدك لهذا الشهر أوشك على النفاذ</div>
+<!-- الشهر والسنة -->
 <p class="summary-month">
   📅 
-  <button
-  id="budgetMonthBtn"
-  onclick="openQuickMonthPicker()"
-  class="month-btn"
->
-  <button id="monthDisplayBtn" onclick="openMonthPicker()" class="month-btn">
-  <span id="budgetMonthText">—</span>
-</button>
+  
 
 <!-- input مخفي لاختيار الشهر -->
 <input
   type="month"
-  id="quickMonthPicker"
   class="hidden"
   onchange="changeMonthOnly(this.value)"
 >

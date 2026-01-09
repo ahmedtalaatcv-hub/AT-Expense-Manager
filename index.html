@@ -8,8 +8,7 @@
 </head>
 <div id="aboutModal" class="modal hidden">
     <div class="modal-content">
-	<img src="logo.png" class="about-logo" alt="App Logo">
-        <h2>حول التطبيق</h2>
+	<h2>حول التطبيق</h2>
 
         <p><strong>اسم المطور:</strong> Ahmed Talaat</p>
         <p><strong>البريد الإلكتروني:</strong> ahmedtalaat.bio@gmail.com</p>
@@ -70,10 +69,7 @@
 <body>
 
 
-<div class="logo">
-    <img src="logo.png" alt="App Logo">
-</div>
-    <header class="topbar">
+<header class="topbar">
   <div class="topbar-inner">
     <div class="topbar-row">
       <div class="topbar-brand">
@@ -87,11 +83,12 @@
       </div>
 
       <div class="topbar-actions">
-        <button class="icon-btn" type="button" onclick="openBudgetModal()" title="تعديل الميزانية" aria-label="تعديل الميزانية">✏️</button>
-      </div>
-    </div>
-
-    <!-- input مخفي لاختيار الشهر (مرّة واحدة فقط) -->
+  <button class="icon-btn" type="button" onclick="openBudgetModal()" title="تعديل الميزانية" aria-label="تعديل الميزانية">✏️</button>
+  <button class="icon-btn danger" type="button" onclick="clearCurrentMonthExpenses()" title="حذف المصروفات لهذا الشهر" aria-label="حذف المصروفات لهذا الشهر">🗑️</button>
+  <button class="icon-btn" type="button" onclick="logout()" title="تسجيل خروج" aria-label="تسجيل خروج">🚪</button>
+</div>
+</div>
+<!-- input مخفي لاختيار الشهر (مرّة واحدة فقط) -->
 
     <div class="stats">
       <div class="stat">
@@ -273,15 +270,7 @@
 
 
 
-<div class="period-grid">
-  <section class="period-card" aria-label="مصروف اليوم">
-    <div class="period-head">
-      <div class="period-title">
-        <span class="period-icon">🕓</span>
-        <span>مصروف اليوم</span>
-        <span class="period-sub">(من 4:00 ص إلى 11:59 م)</span>
-      </div>
-      <div class="period-amount" id="dailyTotalValue">—</div>
+<div class="period-amount" id="dailyTotalValue">—</div>
     </div>
     <details class="period-details">
       <summary>تفاصيل اليوم</summary>

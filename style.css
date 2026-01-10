@@ -757,20 +757,16 @@ li {
   gap: 6px;
 }
 /* صندوق إضافة المصروف الثابت */
-.add-expense-fixed {
-  position: fixed;
-  bottom: 70px; /* نفس ارتفاع bottom-nav */
-  left: 0;
-  right: 0;
-
-  background: #ffffff;
-  padding: 10px 12px;
-
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
-
-  z-index: 2999;
+.add-expense-fixed::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 10px;
+  margin: 0 auto 6px;
 }
+
 .add-expense-fixed::after {
   content: "";
   position: absolute;

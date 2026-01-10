@@ -801,6 +801,22 @@ li {
 body {
   padding-bottom: 260px; /* bottom-nav + add-expense */
 }
+/* ===== تصغير ارتفاع صناديق الإدخال ===== */
+.add-expense-fixed input,
+.add-expense-fixed select {
+  height: 34px;        /* ⬅️ الطول (صغير ومريح) */
+  padding: 4px 10px;   /* ⬅️ تقليل الفراغ الداخلي */
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+/* زر الإضافة */
+.add-expense-fixed button {
+  height: 36px;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 12px;
+}
 
 /* ===== Topbar compact sizing (Requested) ===== */
 .topbar-inner{ padding: 8px 12px 8px; }
@@ -813,6 +829,7 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 
 
 

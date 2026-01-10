@@ -839,6 +839,11 @@ body {
 
   z-index: 4000;
 }
+.add-expense-fixed input#title {
+  width: 90%;
+  margin: 0 auto 8px;
+  display: block;
+}
 
 /* ===== Topbar compact sizing (Requested) ===== */
 .topbar-inner{ padding: 8px 12px 8px; }
@@ -851,6 +856,7 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 
 
 

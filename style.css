@@ -402,7 +402,7 @@ li {
 
 /* مسافة أسفل المحتوى */
 body {
-  padding-bottom: 90px;
+  padding-bottom: 200px;
 }
 .edit-budget-icon {
   cursor: pointer;
@@ -793,4 +793,5 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 

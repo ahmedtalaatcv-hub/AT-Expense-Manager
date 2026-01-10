@@ -822,7 +822,24 @@ body {
 .row select {
   flex: 1;
 }
-س
+.add-expense-fixed {
+  position: fixed;
+  bottom: 70px; /* فوق bottom-nav */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 24px);
+  max-width: 430px;
+
+  background: #ffffff;
+  padding: 10px 12px;
+
+  border-radius: 18px;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
+
+  z-index: 4000;
+}
+
 /* ===== Topbar compact sizing (Requested) ===== */
 .topbar-inner{ padding: 8px 12px 8px; }
 .brand-title{ font-size: 16px; }
@@ -834,6 +851,7 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 
 
 

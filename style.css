@@ -817,7 +817,16 @@ body {
   font-size: 14px;
   border-radius: 12px;
 }
+.row {
+  display: flex;
+  gap: 8px;
+}
 
+.row input,
+.row select {
+  flex: 1;
+}
+س
 /* ===== Topbar compact sizing (Requested) ===== */
 .topbar-inner{ padding: 8px 12px 8px; }
 .brand-title{ font-size: 16px; }
@@ -829,6 +838,7 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 
 
 

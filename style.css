@@ -2,7 +2,6 @@ body {
     font-family: Cairo, sans-serif;
     background: linear-gradient(135deg, #667eea, #764ba2);
     padding: 20px;
-  padding-bottom: 80px;
 }
 
 .app {
@@ -400,10 +399,7 @@ li {
   transform: scale(0.95);
 }
 
-/* مسافة أسفل المحتوى */
-body {
-  padding-bottom: 200px;
-}
+
 .edit-budget-icon {
   cursor: pointer;
   margin-right: 8px;
@@ -763,24 +759,48 @@ body {
 /* صندوق إضافة المصروف الثابت */
 .add-expense-fixed {
   position: fixed;
-  bottom: 0;
+  bottom: 70px; /* نفس ارتفاع bottom-nav */
   left: 0;
   right: 0;
 
   background: #ffffff;
-  padding: 12px;
+  padding: 10px 12px;
 
   border-radius: 20px 20px 0 0;
-  box-shadow: 0 -8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
 
-  z-index: 9999;
+  z-index: 2999;
+}
+.add-expense-fixed::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: rgba(0,0,0,0.08);
 }
 
-/* علشان المحتوى ميستخباش */
+
+
+
+/* تصغير ارتفاع مربعات الإدخال */
+.add-expense-fixed input,
+.add-expense-fixed select {
+  padding: 6px 10px;     /* كان 10px */
+  height: 38px;          /* طول ثابت صغير */
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.add-expense-fixed button {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 12px;
+}
 body {
-  padding-bottom: 160px;
+  padding-bottom: 260px; /* bottom-nav + add-expense */
 }
-
 
 /* ===== Topbar compact sizing (Requested) ===== */
 .topbar-inner{ padding: 8px 12px 8px; }
@@ -793,5 +813,6 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
 
 

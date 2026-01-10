@@ -132,37 +132,32 @@
 
 
 
- <div class="add-expense-fixed">
-  <div class="card">
-	<div class="card">
-  <label>إضافة مصروف</label>
+<div class="add-expense-fixed">
+  <div class="card add-expense-card">
 
-  <input type="text" id="title" placeholder="سبب الصرف">
+    <!-- سبب الصرف -->
+    <input id="title" placeholder="سبب الصرف">
 
-  <input type="number" id="amount" placeholder="المبلغ">
+    <!-- المبلغ + الفئة جنب بعض -->
+    <div class="row">
+      <input id="amount" type="number" placeholder="المبلغ">
 
-  <!-- اختيار الفئة -->
-  <select id="category">
-    <option value="">اختر الفئة</option>
-    <option value="مواصلات">🚕 مواصلات</option>
-    <option value="طعام">🍔 طعام</option>
-    <option value="ملابس">👕 ملابس</option>
-    <option value="فواتير">💡 فواتير</option>
-    <option value="new">➕ إضافة فئة جديدة</option>
-  </select>
+      <select id="category">
+        <option value="">اختر الفئة</option>
+        <option value="مواصلات">🚕 مواصلات</option>
+        <option value="طعام">🍔 طعام</option>
+        <option value="ملابس">👕 ملابس</option>
+        <option value="فواتير">💡 فواتير</option>
+        <option value="new">➕ فئة جديدة</option>
+      </select>
+    </div>
 
-  <!-- يظهر فقط عند اختيار إضافة فئة -->
-  <input
-    type="text"
-    id="newCategory"
-    placeholder="اسم الفئة الجديدة"
-    class="hidden"
-  >
+    <!-- زر الإضافة -->
+    <button onclick="addExpense()">إضافة</button>
 
-  <button onclick="addExpense()">إضافة</button>
+  </div>
 </div>
-</div>
-</div>
+
 <!-- القائمة المنبثقة -->
 <div id="menu" class="menu hidden">
   <div class="controls">
@@ -234,6 +229,7 @@
 
 </body>
 </html>
+
 
 
 

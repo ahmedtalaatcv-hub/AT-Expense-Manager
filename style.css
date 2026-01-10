@@ -707,6 +707,79 @@ body {
 .topbar-spacer{
   height: 10px;
 }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* الكروت الأساسية */
+.stat {
+  background: #f7f8fa;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ===== مصروف اليوم + الأسبوع ===== */
+.stat:nth-child(4),
+.stat:nth-child(5) {
+  grid-column: span 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eef2ff;
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.stat:nth-child(4) .stat-value,
+.stat:nth-child(5) .stat-value {
+  font-size: 16px;
+}
+
+.stat-sub {
+  font-size: 11px;
+  opacity: 0.6;
+}
+.topbar {
+  padding-bottom: 10px;
+}
+
+.topbar-inner {
+  gap: 6px;
+}
+/* صندوق إضافة المصروف الثابت */
+.add-expense-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #ffffff;
+  padding: 12px;
+
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 25px rgba(0,0,0,0.15);
+
+  z-index: 9999;
+}
+
+/* علشان المحتوى ميستخباش */
+body {
+  padding-bottom: 160px;
+}
 
 
 /* ===== Topbar compact sizing (Requested) ===== */
@@ -720,3 +793,4 @@ body {
 .stat-label{ font-size: 11px; margin-bottom: 5px; }
 .topbar-spacer{ height: 8px; }
 .icon-btn.danger{ border-color: rgba(0,0,0,0.20); }
+
